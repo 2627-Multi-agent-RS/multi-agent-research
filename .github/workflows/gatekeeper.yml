@@ -73,8 +73,8 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             echo "Quét các commit mới trong Pull Request..."
-            gitleaks git --log-opts="origin/${{ github.base_ref }}..HEAD" --verbose --redact
+            gitleaks detect --log-opts="origin/${{ github.base_ref }}..HEAD" --verbose --redact
           else
             echo "Quét toàn bộ tệp mã nguồn hiện tại trong repository..."
-            gitleaks dir --verbose --redact
+            gitleaks detect --no-git --source . --verbose --redact
           fi
