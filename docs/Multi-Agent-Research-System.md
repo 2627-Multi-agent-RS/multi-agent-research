@@ -711,7 +711,7 @@ multi-agent-research/
 
 ```env
 # AI Model Configuration
-GEMINI_API_KEY=AIzaSyYourGoogleAIStudioKeyHere
+GEMINI_API_KEY=your_gemini_api_key_here
 PRIMARY_LLM_MODEL=gemini-2.0-flash
 FALLBACK_LLM_MODEL=gemini-1.5-flash
 
