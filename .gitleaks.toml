@@ -1,4 +1,5 @@
-title = "Gitleaks configuration for Multi-Agent Research System"
+[extend]
+useDefault = true
 
 [allowlist]
 description = "Ignore example placeholders and documentation"
