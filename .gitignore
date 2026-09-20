@@ -49,10 +49,15 @@ env/
 htmlcov/
 
 # LangGraph Storage & Checkpoint DB
-storage/*.db
-storage/*.sqlite
-storage/*.sqlite3
-storage/checkpoints.db*
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+**/storage/*.db*
+**/storage/*.sqlite*
+!**/storage/.gitkeep
 checkpoint_data/
 
 # IDE & Editor
