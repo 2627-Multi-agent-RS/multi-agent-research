@@ -50,7 +50,7 @@ jobs:
             ci
           requireScope: false
 
-  # === JOB 2: DETECT SECRET LEAKS (GITLEAKS) ===
+  # === JOB 2: DETECT SECRET LEAKS (GITLEAKS OSS) ===
   secret-scan:
     name: Secret Leak Detection
     runs-on: ubuntu-latest
@@ -62,7 +62,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run Gitleaks Secret Scanner
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Gitleaks Binary
+        run: |
+          GITLEAKS_VERSION="8.18.2"
+          wget -q "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          tar -xzf "gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          sudo mv gitleaks /usr/local/bin/
+
+      - name: Run Gitleaks Detection
+        run: |
+          gitleaks git --verbose --redact
