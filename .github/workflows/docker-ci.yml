@@ -15,6 +15,9 @@ on:
       - 'frontend/Dockerfile'
       - '.github/workflows/docker-ci.yml'
 
+permissions:
+  contents: read
+
 concurrency:
   group: docker-${{ github.ref }}
   cancel-in-progress: true
@@ -29,7 +32,9 @@ jobs:
 
       - name: Validate Docker Compose Syntax
         run: |
-          echo "Kiểm tra tính hợp lệ cú pháp docker-compose.yml..."
+          echo "Chuẩn bị file môi trường mẫu để validate cấu hình..."
+          [ -f backend/.env ] || cp backend/.env.example backend/.env 2>/dev/null || touch backend/.env
+          [ -f frontend/.env ] || cp frontend/.env.example frontend/.env 2>/dev/null || touch frontend/.env
           docker compose config
 
       - name: Guardrail Check Dockerfiles Existence

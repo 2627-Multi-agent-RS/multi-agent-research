@@ -11,6 +11,9 @@ on:
       - 'backend/**'
       - '.github/workflows/backend.yml'
 
+permissions:
+  contents: read
+
 concurrency:
   group: backend-${{ github.ref }}
   cancel-in-progress: true
@@ -32,8 +35,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip'
-          cache-dependency-path: backend/requirements.txt
 
       - name: Install Quality Tools (Ruff & Mypy)
         run: |
@@ -76,8 +77,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip'
-          cache-dependency-path: backend/requirements.txt
 
       - name: Install Test Dependencies
         run: |

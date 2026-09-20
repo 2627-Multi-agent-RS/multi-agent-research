@@ -6,6 +6,10 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+  pull-requests: read
+
 concurrency:
   group: gatekeeper-${{ github.ref }}
   cancel-in-progress: true
@@ -16,8 +20,6 @@ jobs:
     name: Validate Conventional Commit
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
-    permissions:
-      pull-requests: read
     steps:
       - name: Validate PR Title Syntax
         uses: amannn/action-semantic-pull-request@v5
@@ -62,3 +64,5 @@ jobs:
 
       - name: Run Gitleaks Secret Scanner
         uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
