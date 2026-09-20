@@ -1,0 +1,64 @@
+name: PR Gatekeeper
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+  push:
+    branches: [main]
+
+concurrency:
+  group: gatekeeper-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # === JOB 1: VALIDATE PR TITLE (CONVENTIONAL COMMITS - HƯỚNG A) ===
+  lint-pr-title:
+    name: Validate Conventional Commit
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      pull-requests: read
+    steps:
+      - name: Validate PR Title Syntax
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            style
+            refactor
+            perf
+            test
+            build
+            ci
+            chore
+            revert
+          scopes: |
+            backend
+            frontend
+            agent
+            graph
+            tools
+            docker
+            deps
+            docs
+            ci
+          requireScope: false
+
+  # === JOB 2: DETECT SECRET LEAKS (GITLEAKS) ===
+  secret-scan:
+    name: Secret Leak Detection
+    runs-on: ubuntu-latest
+    # Bỏ qua nếu dev chỉ sửa tiêu đề PR để tiết kiệm runner
+    if: github.event.action != 'edited'
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks Secret Scanner
+        uses: gitleaks/gitleaks-action@v2

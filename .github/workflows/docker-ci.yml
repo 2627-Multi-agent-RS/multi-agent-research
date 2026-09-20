@@ -1,0 +1,50 @@
+name: Docker Sanity CI
+
+on:
+  pull_request:
+    paths:
+      - 'docker-compose.yml'
+      - 'backend/Dockerfile'
+      - 'frontend/Dockerfile'
+      - '.github/workflows/docker-ci.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docker-compose.yml'
+      - 'backend/Dockerfile'
+      - 'frontend/Dockerfile'
+      - '.github/workflows/docker-ci.yml'
+
+concurrency:
+  group: docker-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docker-sanity:
+    name: Docker Compose & Image Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate Docker Compose Syntax
+        run: |
+          echo "Kiểm tra tính hợp lệ cú pháp docker-compose.yml..."
+          docker compose config
+
+      - name: Guardrail Check Dockerfiles Existence
+        id: check_dockerfiles
+        run: |
+          if [ ! -f "backend/Dockerfile" ] || [ ! -f "frontend/Dockerfile" ]; then
+            echo "::notice ::Chưa tìm thấy backend/Dockerfile hoặc frontend/Dockerfile. Tự động bypass stage build container an toàn."
+            echo "skip_build=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Đã tìm thấy đầy đủ Dockerfiles. Tiến hành kích hoạt build."
+            echo "skip_build=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build Docker Containers
+        if: steps.check_dockerfiles.outputs.skip_build == 'false'
+        run: |
+          echo "Tiến hành build các service theo docker-compose..."
+          docker compose build

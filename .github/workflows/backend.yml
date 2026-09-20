@@ -1,0 +1,109 @@
+name: Backend CI
+
+on:
+  pull_request:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yml'
+
+concurrency:
+  group: backend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # === TẦNG 1: STATIC QUALITY GATE (FAIL-FAST TRONG ~20S) ===
+  backend-quality:
+    name: Backend Lint & Typecheck
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Install Quality Tools (Ruff & Mypy)
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff mypy
+
+      - name: Guardrail & Run Static Checks
+        run: |
+          # Kiểm tra nếu có mã nguồn ứng dụng trong app/
+          if [ -d "app" ]; then
+            echo "::group::Ruff Format Check"
+            ruff format --check app/
+            echo "::endgroup::"
+
+            echo "::group::Ruff Lint Check"
+            ruff check app/
+            echo "::endgroup::"
+
+            echo "::group::Mypy Static Typecheck"
+            mypy app/ --ignore-missing-imports
+            echo "::endgroup::"
+          else
+            echo "::notice ::Chưa phát hiện thư mục app/ trong backend/. Bỏ qua kiểm tra chất lượng an toàn."
+          fi
+
+  # === TẦNG 2: TEST GATE (CHỈ CHẠY KHI TẦNG 1 PASS TOÀN BỘ) ===
+  backend-tests:
+    name: Backend Unit & Graph Tests
+    needs: [backend-quality]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Install Test Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-asyncio pytest-cov pytest-mock
+          if [ -f requirements.txt ]; then
+            echo "Installing dependencies from requirements.txt..."
+            pip install -r requirements.txt
+          else
+            echo "::notice ::Chưa có file requirements.txt. Bỏ qua cài đặt dependencies."
+          fi
+
+      - name: Guardrail & Run Pytest (Mocked LLM & Tavily)
+        run: |
+          if [ -d "tests" ] && [ $(find tests -name "test_*.py" 2>/dev/null | wc -l) -gt 0 ]; then
+            echo "::group::Pytest Suite"
+            pytest tests/ -v
+            echo "::endgroup::"
+          else
+            echo "::notice ::Chưa có file test nào trong tests/. Bỏ qua Pytest an toàn (tránh lỗi Exit Code 5)."
+          fi
+        env:
+          GEMINI_API_KEY: "mock-gemini-key-for-ci"
+          TAVILY_API_KEY: "mock-tavily-key-for-ci"
+          PRIMARY_LLM_MODEL: "gemini-2.0-flash"
+          FALLBACK_LLM_MODEL: "gemini-1.5-flash"
+          ENVIRONMENT: "testing"
+          LOG_LEVEL: "INFO"
+          CHECKPOINT_DB_PATH: ":memory:"

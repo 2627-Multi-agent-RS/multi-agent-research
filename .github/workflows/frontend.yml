@@ -1,0 +1,94 @@
+name: Frontend CI
+
+on:
+  pull_request:
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend.yml'
+
+concurrency:
+  group: frontend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # === TẦNG 1: STATIC QUALITY GATE (FAIL-FAST TRONG ~20S) ===
+  frontend-quality:
+    name: Frontend Lint & Typecheck
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Guardrail & Run Static Quality Checks
+        run: |
+          if [ -f "package.json" ]; then
+            if [ -f "package-lock.json" ]; then
+              npm ci
+            else
+              npm install
+            fi
+
+            echo "::group::Lint Check"
+            npm run lint --if-present
+            echo "::endgroup::"
+
+            if [ -f "tsconfig.json" ]; then
+              echo "::group::TypeScript Type Check"
+              npx tsc --noEmit
+              echo "::endgroup::"
+            fi
+          else
+            echo "::notice ::Chưa có file package.json trong frontend/. Bỏ qua kiểm tra chất lượng an toàn."
+          fi
+
+  # === TẦNG 2: BUILD GATE (CHỈ CHẠY KHI TẦNG 1 PASS TOÀN BỘ) ===
+  frontend-build:
+    name: Frontend Bundle Build
+    needs: [frontend-quality]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Guardrail & Build Bundle
+        run: |
+          if [ -f "package.json" ]; then
+            if [ -f "package-lock.json" ]; then
+              npm ci
+            else
+              npm install
+            fi
+
+            echo "::group::Vite Bundle Build"
+            npm run build --if-present
+            echo "::endgroup::"
+          else
+            echo "::notice ::Chưa có file package.json trong frontend/. Bỏ qua build bundle an toàn."
+          fi
