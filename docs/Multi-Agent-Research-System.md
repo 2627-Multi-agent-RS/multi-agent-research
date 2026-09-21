@@ -35,15 +35,33 @@ Hệ thống **Multi-Agent Research System (MAS)** là một nền tảng nghiê
   * Xuất bản báo cáo chuẩn Markdown có hệ thống đánh số trích dẫn (Footnotes/Citations) và các cảnh báo giới hạn dữ liệu.
   * Truyền phát tiến độ từng bước của các agent theo thời gian thực tới trình duyệt.
 * **Phi chức năng (Non-Functional Requirements)**:
+  * **Môi trường & Ngôn ngữ (Backend Runtime)**: Toàn bộ dịch vụ Backend được phát triển trên nền tảng **Python 3.11+**, tối ưu hóa tính toán không đồng bộ và tương thích toàn diện với hệ sinh thái AI/Agentic.
   * **Độ trễ tối ưu (Latency Optimization)**: Sử dụng mô hình xử lý bất đồng bộ (`asyncio`) và truy vấn web song song.
   * **Độ bền vững & Chống sập (High Resilience)**: Cơ chế Exponential Backoff Retry với Jitter và Fallback đa tầng (LLM & Search Engine).
   * **Khả năng lưu vết (Persistence & Traceability)**: Quản lý phiên làm việc theo `thread_id` với LangGraph Checkpointer.
-  * **An toàn kiểu dữ liệu (Strict Type-Safety)**: Pydantic v2 ở Backend đồng bộ với TypeScript interfaces ở Frontend.
+  * **An toàn kiểu dữ liệu (Strict Type-Safety)**: Pydantic v2 ở Backend Python đồng bộ với TypeScript interfaces ở Frontend.
 
 ### 1.3 Nguyên tắc Thiết kế Cốt lõi (Core Design Principles)
 1. **Phân rã trách nhiệm triệt để (Separation of Concerns)**: Mỗi agent sở hữu một vai trò duy nhất: Lập kế hoạch (`Orchestrator`), Thu thập (`Researcher`), Phản biện (`Analyst`), Hành văn (`Writer`).
 2. **Minh chứng 100% (Strict Evidence Grounding)**: Không cho phép xuất bản nhận định số liệu khi chưa có trích đoạn bằng chứng (`evidence`) và URL nguồn xác thực.
-3. **Điều hướng phi tập trung (Graph-Driven Routing)**: Không điều phối bằng câu lệnh `if/else` thủ công hoặc các chain cứng; toàn bộ chu trình do đồ thị trạng thái **LangGraph StateGraph** quản lý.
+3. **Điều hướng phi tập trung (Graph-Driven Routing)**: Không điều phối bằng câu lệnh `if/else` thủ công hoặc các chain cứng; toàn bộ chu trình do đồ thị trạng thái **LangGraph StateGraph (Python)** quản lý.
+
+### 1.4 Ngăn xếp Công nghệ Cốt lõi (Core Technology Stack)
+
+Hệ thống phân tách tường minh hai tầng Client - Server, trong đó **toàn bộ tầng Backend được hiện thực hoàn toàn bằng ngôn ngữ Python (Python 3.11+)**:
+
+| Phân hệ (Subsystem) | Thành phần (Component) | Công nghệ & Thư viện Chính | Vai trò & Mục đích Sử dụng |
+| :--- | :--- | :--- | :--- |
+| **Backend Runtime** | Ngôn ngữ & Runtime | **Python 3.11+** | Môi trường thực thi async (`asyncio`), Type Annotations, hiệu năng cao |
+| **Backend Web & Gateway**| API & Streaming | **FastAPI + Uvicorn + WebSockets** | Cổng giao tiếp hai chiều thời gian thực, quản lý kết nối và truyền phát sự kiện Agent |
+| **Multi-Agent Engine** | Điều phối Đồ thị | **LangGraph (Python) + LangChain Core** | StateGraph, Conditional Routing, Human-in-the-loop & Checkpointing |
+| **AI / LLM Integration** | Mô hình Trí tuệ Nhân tạo | **Google Gemini 2.0 Flash / 1.5 Flash** (`langchain-google-genai`) | LLM chính xử lý phân tách nhiệm vụ, đối soát chéo và sinh báo cáo có trích dẫn |
+| **Data Validation** | Hợp đồng Dữ liệu | **Pydantic v2** (`pydantic-settings`) | Xác thực kiểu dữ liệu nghiêm ngặt, chuyển đổi schema JSON, đồng bộ với Frontend |
+| **Search & Scraping** | Tìm kiếm & Cào Web | **Tavily Python SDK, DuckDuckGo Search, Trafilatura** | Tìm kiếm thông tin ngữ cảnh RAG và bóc tách nội dung bài viết gốc sạch mã HTML |
+| **Resilience & Fault Tolerance** | Tự phục hồi & Chống sập | **Tenacity (Python)** | Exponential backoff retry with jitter khi gặp lỗi Rate Limit (429) hoặc 503 |
+| **State Persistence** | Lưu giữ Phiên làm việc | **SQLite WAL Mode / aiosqlite (SqliteSaver)** | Lưu snapshot trạng thái đồ thị theo `thread_id`, khôi phục phiên khi mất kết nối |
+| **Code Quality & CI/CD**| Kiểm chuẩn & Kiểm thử | **Ruff, Mypy, Pytest, Pytest-asyncio** | Linter/formatter siêu tốc, kiểm tra kiểu tĩnh và kiểm thử tự động trên CI |
+| **Frontend Client** | Giao diện Người dùng | **React 18, TypeScript, Vite, Tailwind CSS** | Render báo cáo Markdown, Timeline tiến độ thời gian thực, bảng nguồn tương tác |
 
 ---
 
@@ -59,14 +77,14 @@ flowchart TD
         UI <--> Hook
     end
 
-    subgraph Transport_Layer["2. Tầng Giao tiếp & Cổng API (FastAPI)"]
+    subgraph Transport_Layer["2. Tầng Giao tiếp & Cổng API (Backend - Python 3.11+ / FastAPI)"]
         WSEndpoint["Endpoint WebSocket: /ws/research"]
         ConnMgr["Connection & Event Manager"]
         Hook <== "Kênh WebSocket Hai chiều" ==> WSEndpoint
         WSEndpoint --> ConnMgr
     end
 
-    subgraph Core_Engine["3. Tầng Điều phối Trung tâm (LangGraph Engine)"]
+    subgraph Core_Engine["3. Tầng Điều phối Trung tâm (LangGraph Engine - Python)"]
         direction TB
         State[("AgentState (Trạng thái Chung Pydantic)")]
         Saver[("LangGraph Checkpointer (Sqlite / Postgres)")]
@@ -171,58 +189,287 @@ sequenceDiagram
 
 ## 3. Đặc tả 4 Agent Chuyên biệt (Specialized Agent Specifications)
 
+Tất cả các Agent trong hệ thống đều được xây dựng hoàn toàn bằng **Python bất đồng bộ (`asyncio`)**, hoạt động như các Node độc lập trong đồ thị LangGraph với chữ ký chuẩn:  
+`async def run_<agent_name>(state: AgentState) -> Dict[str, Any]`
+
+---
+
 ### 3.1 Orchestrator / Planner Agent
-* **Chức năng**: Tiếp nhận chủ đề nghiên cứu thô từ người dùng, làm rõ phạm vi và phân tích thành **3 đến 5 câu truy vấn con (Sub-queries)** với các góc nhìn bổ trợ nhau:
+
+* **Vị trí tệp**: `app/agents/orchestrator/agent.py` & `app/agents/orchestrator/prompts.py`
+* **Chức năng**: Tiếp nhận đề tài từ `state["topic"]`, làm rõ phạm vi và phân tích thành **3 đến 5 câu truy vấn con (Sub-queries)** với các góc nhìn bổ trợ nhau:
   1. *Thực trạng và định nghĩa cơ bản*.
   2. *Số liệu thống kê, báo cáo tài chính/thị trường mới nhất*.
   3. *Các tranh luận, phản biện hoặc góc nhìn trái chiều*.
   4. *Xu hướng tương lai hoặc tác động lâu dài*.
-* **Input**: `topic: str`, `thread_id: str`.
-* **Output**: `ResearchPlan` (chứa danh sách `sub_queries` và `expected_metrics`).
-* **Mô hình LLM**: `gemini-2.0-flash` (Structured Output).
-* **System Prompt Core**:
-  ```text
-  Bạn là Trưởng bộ phận Kế hoạch Nghiên cứu (Research Planning Lead).
-  Nhiệm vụ của bạn là phân tích đề tài nghiên cứu của người dùng và bóc tách thành 3-5 câu truy vấn tìm kiếm chuyên sâu (sub-queries).
-  Yêu cầu:
-  1. Các câu truy vấn phải độc lập, bao quát đa chiều (dữ liệu định lượng, bằng chứng thực tế, phản biện).
-  2. Sử dụng từ khóa mang tính học thuật, định hướng dữ liệu thực tế (báo cáo, thống kê, phân tích).
-  3. Xuất kết quả theo định dạng JSON đúng cấu trúc ResearchPlan.
-  ```
+* **Mô hình LLM**: `gemini-2.0-flash` (Structured Output với schema `ResearchPlan`).
+
+```python
+# app/agents/orchestrator/prompts.py
+ORCHESTRATOR_SYSTEM_PROMPT = """Bạn là Trưởng bộ phận Kế hoạch Nghiên cứu (Research Planning Lead).
+Nhiệm vụ của bạn là phân tích đề tài nghiên cứu của người dùng và bóc tách thành 3-5 câu truy vấn tìm kiếm chuyên sâu (sub-queries).
+Yêu cầu:
+1. Các câu truy vấn phải độc lập, bao quát đa chiều (dữ liệu định lượng, bằng chứng thực tế, phản biện).
+2. Sử dụng từ khóa mang tính học thuật, định hướng dữ liệu thực tế (báo cáo, thống kê, phân tích).
+3. Xuất kết quả theo đúng cấu trúc ResearchPlan với danh sách sub_queries và expected_metrics."""
+```
+
+```python
+# app/agents/orchestrator/agent.py
+from typing import Dict, Any
+from langchain_core.messages import SystemMessage, HumanMessage
+from app.graph.state import AgentState
+from app.schemas.research import ResearchPlan
+from app.tools.llm.factory import LLMFactory, invoke_with_resilience
+from app.agents.orchestrator.prompts import ORCHESTRATOR_SYSTEM_PROMPT
+
+async def run_orchestrator(state: AgentState) -> Dict[str, Any]:
+    """
+    Node Orchestrator: Tiếp nhận chủ đề nghiên cứu thô từ người dùng,
+    phân tích mục tiêu và sinh 3-5 sub-queries chuyên sâu bằng Python.
+    """
+    topic = state.get("topic", "")
+    model = LLMFactory.get_primary_model(temperature=0.2)
+
+    messages = [
+        SystemMessage(content=ORCHESTRATOR_SYSTEM_PROMPT),
+        HumanMessage(content=f"Đề tài nghiên cứu cần phân rã: {topic}")
+    ]
+
+    plan: ResearchPlan = await invoke_with_resilience(
+        model=model,
+        prompt_messages=messages,
+        structured_schema=ResearchPlan
+    )
+
+    return {
+        "plan": plan.model_dump(),
+        "search_queries": plan.sub_queries
+    }
+```
+
+---
 
 ### 3.2 Researcher Agent
+
+* **Vị trí tệp**: `app/agents/researcher/agent.py` & `app/agents/researcher/prompts.py`
 * **Chức năng**:
-  * Tiếp nhận danh sách `sub_queries` từ State.
-  * Thực thi tìm kiếm đồng thời qua cơ chế bất đồng bộ `asyncio.gather()` trên cả **Tavily Search API** và **DuckDuckGo**.
-  * Chọn lọc top 3 bài viết có độ tương thích cao nhất để cào toàn văn (`full content`) thông qua thư viện `trafilatura`.
+  * Tiếp nhận danh sách truy vấn từ State (`sub_queries` hoặc `follow_up_request.questions` khi retry).
+  * Thực thi tìm kiếm song song đa luồng qua `asyncio.gather()` trên cả **Tavily Search API** và **DuckDuckGo**.
+  * Chọn lọc top 3 bài viết có độ liên quan cao nhất để cào sâu văn bản sạch (`clean text`) bằng `trafilatura`.
   * Trích xuất các sự kiện, số liệu chính xác đính kèm URL nguồn, tiêu đề và ngày xuất bản.
-* **Input**: `sub_queries: List[str]`, `follow_up_request: Optional[FollowUpRequest]`.
-* **Output**: `ResearcherOutput` (danh sách `findings`, `search_queries`, `limitations`).
-* **Công cụ tích hợp**:
-  * `TavilyClient`: Tìm kiếm có trích xuất ngữ cảnh RAG.
-  * `DuckDuckGoSearchRun`: Tìm kiếm bổ trợ dự phòng.
-  * `TrafilaturaReader`: Bóc tách văn bản bài báo loại bỏ mã HTML và quảng cáo thừa.
+* **Output**: `ResearcherOutput` (danh sách `findings`, `search_queries`).
+
+```python
+# app/agents/researcher/prompts.py
+RESEARCHER_EXTRACTION_PROMPT = """Bạn là Chuyên viên Thu thập Dữ liệu (Senior Research Analyst).
+Nhiệm vụ của bạn là đọc các tài liệu tìm kiếm và bóc tách các phát hiện cụ thể (findings).
+Yêu cầu bắt buộc:
+1. Mỗi finding phải có luận điểm rõ ràng (claim) và kèm đoạn trích dẫn nguyên văn làm bằng chứng (evidence).
+2. Phải ghi rõ nguồn URL (source_url) và tiêu đề bài viết (source_title).
+3. Không tự suy diễn hay bịa đặt số liệu không có trong tài liệu nguồn."""
+```
+
+```python
+# app/agents/researcher/agent.py
+import asyncio
+from typing import Dict, Any, List
+from langchain_core.messages import SystemMessage, HumanMessage
+from app.graph.state import AgentState
+from app.schemas.research import ResearcherOutput
+from app.tools.search.engine import parallel_search
+from app.tools.scrapers.web_reader import extract_clean_article
+from app.tools.llm.factory import LLMFactory, invoke_with_resilience
+from app.agents.researcher.prompts import RESEARCHER_EXTRACTION_PROMPT
+
+async def run_researcher(state: AgentState) -> Dict[str, Any]:
+    """
+    Node Researcher: Thực hiện tìm kiếm song song đa nguồn và cào sâu văn bản bài báo gốc,
+    bóc tách dữ liệu thành danh sách Finding có bằng chứng cụ thể.
+    """
+    analysis_data = state.get("analysis") or {}
+    follow_up = analysis_data.get("follow_up_request")
+
+    # Nếu là vòng lặp tra cứu bổ sung (retry_count > 0), tập trung vào câu hỏi follow-up
+    if follow_up and state.get("retry_count", 0) > 0:
+        queries = follow_up.get("questions", [])
+    else:
+        plan_data = state.get("plan") or {}
+        queries = plan_data.get("sub_queries", [state["topic"]])
+
+    # 1. Tìm kiếm bất đồng bộ song song qua Tavily và DuckDuckGo
+    search_docs = await parallel_search(queries)
+
+    # 2. Cào sâu nội dung top 3 bài viết liên quan nhất bằng Trafilatura
+    top_urls = [doc["url"] for doc in search_docs[:3]]
+    scraping_tasks = [extract_clean_article(url) for url in top_urls]
+    scraped_texts = await asyncio.gather(*scraping_tasks, return_exceptions=True)
+
+    # Gộp context tìm kiếm và bài viết gốc
+    context_chunks: List[str] = []
+    for doc in search_docs:
+        context_chunks.append(f"Tiêu đề: {doc['title']}\nURL: {doc['url']}\nTóm tắt: {doc['content']}")
+    for url, text in zip(top_urls, scraped_texts):
+        if isinstance(text, str) and text:
+            context_chunks.append(f"Toàn văn URL ({url}):\n{text}")
+
+    combined_context = "\n\n---\n\n".join(context_chunks)
+
+    # 3. Trích xuất Findings có cấu trúc bằng LLM Gemini 2.0 Flash
+    model = LLMFactory.get_primary_model(temperature=0.1)
+    messages = [
+        SystemMessage(content=RESEARCHER_EXTRACTION_PROMPT),
+        HumanMessage(content=f"Chủ đề nghiên cứu: {state['topic']}\n\nTài liệu thu thập được:\n{combined_context}")
+    ]
+
+    researcher_output: ResearcherOutput = await invoke_with_resilience(
+        model=model,
+        prompt_messages=messages,
+        structured_schema=ResearcherOutput
+    )
+
+    # Kế thừa findings cũ và gộp thêm findings mới nếu có retry
+    existing_findings = state.get("findings", [])
+    new_findings = [f.model_dump() for f in researcher_output.findings]
+
+    return {
+        "findings": existing_findings + new_findings,
+        "search_queries": list(set(state.get("search_queries", []) + queries))
+    }
+```
+
+---
 
 ### 3.3 Analyst Agent
+
+* **Vị trí tệp**: `app/agents/analyst/agent.py` & `app/agents/analyst/prompts.py`
 * **Chức năng**:
   * Đóng vai trò là đơn vị kiểm định chất lượng độc lập (Quality Assurance & Fact-Checker).
-  * Đối chiếu chéo các tuyên bố (`claims`) giữa các nguồn khác nhau để phát hiện sự chênh lệch số liệu (`conflicts`).
+  * Đối chiếu chéo các tuyên bố (`claims`) giữa các nguồn khác nhau để phát hiện mâu thuẫn số liệu (`conflicts`).
   * Đánh giá mức độ tin cậy của các nguồn báo cáo (trang báo uy tín, cơ quan chính phủ vs blog cá nhân).
   * Tính toán chỉ số tin cậy tổng thể `confidence_score` (`0.0` - `1.0`):
     * `status = "complete"` khi `confidence_score >= 0.75`.
     * `status = "needs_more_research"` khi `confidence_score < 0.75` và phát hiện thiếu số liệu trọng yếu hoặc mâu thuẫn lớn.
-* **Input**: `findings: List[Finding]`.
-* **Output**: `AnalystOutput` (gồm `confidence_score`, `verified_findings`, `conclusions`, `insights`, `conflicts`, `follow_up_request`).
-* **Mô hình LLM**: `gemini-2.0-flash` (Nhiệt độ `temperature=0.1` để tối ưu tư duy phân tích chính xác).
+* **Mô hình LLM**: `gemini-2.0-flash` (`temperature=0.1` để tối ưu tư duy phân tích chính xác).
+
+```python
+# app/agents/analyst/prompts.py
+ANALYST_SYSTEM_PROMPT = """Bạn là Trưởng bộ phận Thẩm định Độc lập & Kiểm chứng Dữ liệu (Lead Fact-Checking Analyst).
+Nhiệm vụ của bạn là đối chiếu chéo các tuyên bố (claims) giữa các nguồn tài liệu:
+1. Phát hiện các điểm chênh lệch, mâu thuẫn số liệu giữa các nguồn (conflicts).
+2. Đánh giá tính xác thực và uy tín của nguồn gốc dữ liệu.
+3. Tính toán điểm tin cậy tổng thể confidence_score (0.0 đến 1.0).
+4. Nếu confidence_score < 0.75 và thiếu số liệu then chốt, đặt status = 'needs_more_research' kèm follow_up_request."""
+```
+
+```python
+# app/agents/analyst/agent.py
+import json
+from typing import Dict, Any
+from langchain_core.messages import SystemMessage, HumanMessage
+from app.graph.state import AgentState
+from app.schemas.research import AnalystOutput
+from app.tools.llm.factory import LLMFactory, invoke_with_resilience
+from app.agents.analyst.prompts import ANALYST_SYSTEM_PROMPT
+
+async def run_analyst(state: AgentState) -> Dict[str, Any]:
+    """
+    Node Analyst: Đối chiếu chéo dữ liệu, phát hiện mâu thuẫn số liệu
+    và tính toán chỉ số confidence_score bằng Python.
+    """
+    findings = state.get("findings", [])
+    topic = state.get("topic", "")
+    retry_count = state.get("retry_count", 0)
+
+    findings_json = json.dumps(findings, ensure_ascii=False, indent=2)
+
+    model = LLMFactory.get_primary_model(temperature=0.1)
+    messages = [
+        SystemMessage(content=ANALYST_SYSTEM_PROMPT),
+        HumanMessage(content=f"Chủ đề: {topic}\nLần kiểm định thứ: {retry_count + 1}\n\nDanh sách phát hiện:\n{findings_json}")
+    ]
+
+    analysis: AnalystOutput = await invoke_with_resilience(
+        model=model,
+        prompt_messages=messages,
+        structured_schema=AnalystOutput
+    )
+
+    # Nếu phát hiện cần nghiên cứu thêm và chưa retry lần nào, tăng retry_count
+    new_retry_count = retry_count
+    if analysis.status == "needs_more_research" and retry_count < 1:
+        new_retry_count = retry_count + 1
+
+    return {
+        "analysis": analysis.model_dump(),
+        "retry_count": new_retry_count
+    }
+```
+
+---
 
 ### 3.4 Writer Agent
+
+* **Vị trí tệp**: `app/agents/writer/agent.py` & `app/agents/writer/prompts.py`
 * **Chức năng**:
   * Tổng hợp toàn bộ các kết luận đã được kiểm chứng (`verified_findings`, `conclusions`, `insights`) thành một tài liệu báo cáo nghiên cứu hoàn chỉnh.
   * Xây dựng hệ thống chú thích nguồn khoa học chuẩn xác (đánh chỉ số `[1]`, `[2]`, ... trong văn bản và lập danh mục trích dẫn cuối bài).
-  * **Cơ chế Graceful Degradation**: Nếu pipeline kết thúc trong tình trạng dữ liệu còn hạn chế hoặc có mâu thuẫn chưa giải quyết triệt để (sau 1 lượt retry), Writer có trách nhiệm đặt một mục `⚠️ Cảnh báo & Giới hạn dữ liệu (Warnings)` nổi bật ngay đầu báo cáo.
-* **Input**: `analysis: AnalystOutput`, `findings: List[Finding]`.
-* **Output**: `WriterOutput` (gồm `title`, `content` định dạng Markdown chuẩn, `citations`, `warnings`).
+  * **Cơ chế Graceful Degradation**: Nếu pipeline kết thúc trong tình trạng dữ liệu còn hạn chế hoặc có mâu thuẫn chưa giải quyết triệt để (sau 1 lượt retry), Writer đặt mục `⚠️ Cảnh báo & Giới hạn dữ liệu (Warnings)` nổi bật ngay đầu báo cáo.
 * **Mô hình LLM**: `gemini-2.0-flash` (hoặc cấu hình fallback sang `gemini-1.5-pro` khi người dùng yêu cầu báo cáo học thuật chuyên sâu).
+
+```python
+# app/agents/writer/prompts.py
+WRITER_SYSTEM_PROMPT = """Bạn là Trưởng ban Biên tập Báo cáo Khoa học (Chief Research Editor).
+Nhiệm vụ của bạn là tổng hợp các phát hiện đã được thẩm định thành một báo cáo nghiên cứu hoàn chỉnh:
+1. Viết bài bằng định dạng Markdown chuẩn, cấu trúc rõ ràng (Mở đầu, Phân tích số liệu thực tế, Các góc nhìn tranh luận, Kết luận).
+2. Đánh số trích dẫn chuẩn xác dạng [1], [2] trực tiếp trong câu văn tương ứng với danh sách citations.
+3. Nếu phát hiện mâu thuẫn số liệu (conflicts) chưa giải quyết triệt để, bắt buộc đặt mục '⚠️ Cảnh báo & Giới hạn dữ liệu (Warnings)' nổi bật ở đầu bài."""
+```
+
+```python
+# app/agents/writer/agent.py
+import json
+from typing import Dict, Any
+from langchain_core.messages import SystemMessage, HumanMessage
+from app.graph.state import AgentState
+from app.schemas.research import WriterOutput
+from app.tools.llm.factory import LLMFactory, invoke_with_resilience
+from app.agents.writer.prompts import WRITER_SYSTEM_PROMPT
+
+async def run_writer(state: AgentState) -> Dict[str, Any]:
+    """
+    Node Writer: Tổng hợp toàn bộ kết luận đã kiểm duyệt thành báo cáo Markdown hoàn chỉnh,
+    lập danh mục trích dẫn citations và gắn cảnh báo warnings bằng Python.
+    """
+    topic = state.get("topic", "")
+    analysis_data = state.get("analysis") or {}
+    findings = state.get("findings", [])
+
+    payload = {
+        "topic": topic,
+        "conclusions": analysis_data.get("conclusions", []),
+        "insights": analysis_data.get("insights", []),
+        "verified_findings": analysis_data.get("verified_findings", findings),
+        "conflicts": analysis_data.get("conflicts", []),
+        "retry_count": state.get("retry_count", 0)
+    }
+
+    model = LLMFactory.get_primary_model(temperature=0.2)
+    messages = [
+        SystemMessage(content=WRITER_SYSTEM_PROMPT),
+        HumanMessage(content=f"Dữ liệu nghiên cứu đã qua thẩm định:\n{json.dumps(payload, ensure_ascii=False, indent=2)}")
+    ]
+
+    report: WriterOutput = await invoke_with_resilience(
+        model=model,
+        prompt_messages=messages,
+        structured_schema=WriterOutput
+    )
+
+    return {
+        "final_report": report.model_dump()
+    }
+```
 
 ---
 
@@ -767,18 +1014,107 @@ volumes:
     driver: local
 ```
 
+### 10.3 Đặc tả Dockerfile Backend (Python 3.11-Slim Production)
+
+Tệp Dockerfile chuẩn hóa môi trường thực thi Python 3.11 tối ưu dung lượng (multi-stage build), chạy dưới quyền người dùng không có đặc quyền root (`non-root user`) nhằm đảm bảo an ninh vận hành:
+
+```dockerfile
+# backend/Dockerfile
+FROM python:3.11-slim AS builder
+
+WORKDIR /app
+
+# Cài đặt công cụ biên dịch tối thiểu cho các thư viện C-extension
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Cài đặt toàn bộ dependencies Python
+COPY requirements.txt .
+RUN pip install --no-cache-dir --user -r requirements.txt
+
+# --- Runtime Image ---
+FROM python:3.11-slim AS runner
+
+WORKDIR /app
+
+# Thiết lập biến môi trường chuẩn Python
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PATH="/home/appuser/.local/bin:$PATH"
+
+# Tạo tài khoản non-root appuser
+RUN useradd -m -u 1001 appuser && \
+    mkdir -p /app/storage && \
+    chown -R appuser:appuser /app
+
+# Sao chép các gói Python đã cài đặt từ builder
+COPY --from=builder /root/.local /home/appuser/.local
+COPY --chown=appuser:appuser . .
+
+USER appuser
+
+EXPOSE 8000
+
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+    CMD curl -f http://localhost:8000/docs || exit 1
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
+```
+
+### 10.4 Danh mục Phụ thuộc Python (`backend/requirements.txt`)
+
+Tập hợp các thư viện Python 3.11 cốt lõi được khóa phiên bản phục vụ chạy hệ thống:
+
+```text
+# Web Framework & ASGI Server
+fastapi>=0.110.0,<0.116.0
+uvicorn[standard]>=0.28.0,<0.35.0
+websockets>=12.0,<15.0
+
+# Multi-Agent Framework & LLM
+langgraph>=0.0.30,<0.3.0
+langchain-core>=0.1.30,<0.4.0
+langchain-google-genai>=0.0.11,<2.1.0
+
+# Data Contracts & Config
+pydantic>=2.6.0,<2.11.0
+pydantic-settings>=2.2.0,<2.9.0
+
+# Search & Deep Scraping
+tavily-python>=0.3.3,<0.6.0
+duckduckgo-search>=5.0.0,<7.4.0
+trafilatura>=1.8.0,<2.1.0
+
+# Resilience & Storage
+tenacity>=8.2.3,<9.1.0
+loguru>=0.7.2,<0.8.0
+aiosqlite>=0.20.0,<0.21.0
+
+# Testing & Static Analysis (Development)
+pytest>=8.0.0,<9.0.0
+pytest-asyncio>=0.23.0,<0.26.0
+pytest-cov>=4.1.0,<6.1.0
+ruff>=0.3.0,<0.10.0
+mypy>=1.9.0,<1.16.0
+```
+
 ---
 
 ## 11. Chiến lược Kiểm thử & Đảm bảo Chất lượng (Testing & QA Strategy)
 
-### 11.1 Các Tầng Kiểm thử
-1. **Unit Testing (Pytest)**:
+### 11.1 Các Tầng Kiểm thử (Python Test Gates)
+1. **Kiểm chuẩn Tĩnh & Kiểu dữ liệu (Ruff & Mypy)**:
+   * Chạy linter & code formatter `ruff` để đảm bảo phong cách lập trình chuẩn PEP 8.
+   * Chạy static type check `mypy` trên toàn bộ module Python (`app/`) nhằm ngăn chặn lỗi kiểu dữ liệu tại thời điểm runtime.
+2. **Unit Testing (Pytest & Pytest-asyncio)**:
    * Kiểm thử tính tương thích schema của từng Agent thông qua việc giả lập (Mock) LLM response.
    * Xác thực hàm routing `should_continue_research` với các giá trị biên (`retry_count = 0`, `retry_count = 1`).
-2. **Integration Testing**:
+3. **Integration Testing**:
    * Kiểm thử luồng tích hợp StateGraph với `SqliteSaver`.
    * Kiểm tra khả năng tự động kích hoạt DuckDuckGo khi Tavily bị giả lập lỗi mạng.
-3. **End-to-End WebSocket Testing**:
+4. **End-to-End WebSocket Testing**:
    * Kiểm thử kết nối WebSocket, tính đúng đắn của chuỗi sự kiện được phát đi từ khi gửi `topic` đến khi nhận `final_report`.
 
 ### 11.2 Ma trận Kịch bản Kiểm thử Nghiệm thu (Acceptance Test Matrix)
