@@ -1,5 +1,8 @@
+import asyncio
+
 import pytest
-from app.schemas.research import AnalystOutput, Finding, WriterOutput, Citation
+
+from app.schemas.research import AnalystOutput, Finding
 
 
 # --- Test schema validation ---
@@ -57,9 +60,9 @@ async def test_run_analyst_detects_conflict(mocker):
     assert result["analysis"]["status"] == "needs_more_research"
     assert len(result["analysis"]["conflicts"]) > 0
 
+
 def test_run_analyst_empty_findings_returns_fallback():
     from app.agents.analyst.agent import run_analyst
-    import asyncio
 
     result = asyncio.run(run_analyst({"findings": []}))
     assert result["analysis"]["status"] == "needs_more_research"
