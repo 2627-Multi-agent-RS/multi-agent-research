@@ -25,7 +25,6 @@ def test_analyst_output_rejects_invalid_confidence():
         )
 
 
-# --- Test run_analyst với mock LLM (không gọi API thật) ---
 @pytest.mark.asyncio
 async def test_run_analyst_detects_conflict(mocker):
     from app.agents.analyst.agent import run_analyst
@@ -39,12 +38,8 @@ async def test_run_analyst_detects_conflict(mocker):
         conflicts=["Tăng trưởng GDP: Nguồn A 6.5%, Nguồn B 4.2%"],
     )
 
-    # Mock CẢ bước tạo model lẫn bước gọi model
     mocker.patch("app.agents.analyst.agent._get_temp_model", return_value=None)
-    mocker.patch(
-        "app.agents.analyst.agent._invoke_temp",
-        return_value=mock_result,
-    )
+    mocker.patch("app.agents.analyst.agent._invoke_temp", return_value=mock_result)
 
     state = {
         "findings": [
@@ -54,17 +49,17 @@ async def test_run_analyst_detects_conflict(mocker):
     }
     result = await run_analyst(state)
 
-    assert result["analysis"]["status"] == "needs_more_research"
-    assert len(result["analysis"]["conflicts"]) > 0
+    assert result["analysis"].status == "needs_more_research"      # sửa .status thay vì ["status"]
+    assert len(result["analysis"].conflicts) > 0                    # sửa .conflicts thay vì ["conflicts"]
+
 
 def test_run_analyst_empty_findings_returns_fallback():
     from app.agents.analyst.agent import run_analyst
     import asyncio
 
     result = asyncio.run(run_analyst({"findings": []}))
-    assert result["analysis"]["status"] == "needs_more_research"
-    assert result["analysis"]["confidence_score"] == 0.0
-
+    assert result["analysis"].status == "needs_more_research"       
+    assert result["analysis"].confidence_score == 0.0                
 
 # --- Test writer: warning block chèn đúng khi có conflict ---
 def test_apply_warning_block_inserts_warning():
