@@ -1,4 +1,5 @@
 """Translate LangGraph execution into stable frontend WebSocket events."""
+
 import asyncio
 from collections.abc import AsyncIterator
 from typing import Any
@@ -71,9 +72,18 @@ async def _mock_events(thread_id: str, topic: str) -> AsyncIterator[WebSocketEve
     )
     await asyncio.sleep(0.02)
     mock_sources = [
-        {"url": "https://example.com/reports/electric-vehicles-2025", "title": "Báo cáo Thị trường Xe điện Toàn cầu 2025"},
-        {"url": "https://example.com/analysis/battery-technology", "title": "Phân tích Xu hướng Công nghệ Pin Thế hệ mới"},
-        {"url": "https://example.com/policy/clean-energy-subsidies", "title": "Chính sách Trợ cấp Năng lượng Sạch"},
+        {
+            "url": "https://example.com/reports/electric-vehicles-2025",
+            "title": "Báo cáo Thị trường Xe điện Toàn cầu 2025",
+        },
+        {
+            "url": "https://example.com/analysis/battery-technology",
+            "title": "Phân tích Xu hướng Công nghệ Pin Thế hệ mới",
+        },
+        {
+            "url": "https://example.com/policy/clean-energy-subsidies",
+            "title": "Chính sách Trợ cấp Năng lượng Sạch",
+        },
     ]
     yield make_event(
         thread_id,
@@ -177,7 +187,9 @@ def _node_name(event: dict[str, Any]) -> str | None:
     return name if name in NODE_PROGRESS else None
 
 
-def normalize_graph_event(thread_id: str, event: dict[str, Any]) -> list[WebSocketEvent]:
+def normalize_graph_event(
+    thread_id: str, event: dict[str, Any]
+) -> list[WebSocketEvent]:
     """Chuyển đổi LangGraph v2 stream event thành các WebSocketEvent chuẩn."""
     node = _node_name(event)
     if not node:
@@ -230,7 +242,14 @@ def normalize_graph_event(thread_id: str, event: dict[str, Any]) -> list[WebSock
                     seen_urls.add(url)
                     sources.append({"url": url, "title": title})
         if sources:
-            events.append(make_event(thread_id, "sources_updated", agent=node, payload={"sources": sources}))
+            events.append(
+                make_event(
+                    thread_id,
+                    "sources_updated",
+                    agent=node,
+                    payload={"sources": sources},
+                )
+            )
 
     elif node == "analyst":
         analysis = output.get("analysis", output)
@@ -292,11 +311,15 @@ async def stream_research(
         return
 
     if graph is None:
-        raise RuntimeError("Research graph is not available. Please ensure graph is compiled or enable USE_MOCK_RESEARCH.")
+        raise RuntimeError(
+            "Research graph is not available. Please ensure graph is compiled or enable USE_MOCK_RESEARCH."
+        )
 
     config = {"configurable": {"thread_id": thread_id}}
     initial_state = build_initial_state(thread_id, topic)
 
-    async for raw_event in graph.astream_events(initial_state, config=config, version="v2"):
+    async for raw_event in graph.astream_events(
+        initial_state, config=config, version="v2"
+    ):
         for event in normalize_graph_event(thread_id, raw_event):
             await manager.broadcast_to_thread(thread_id, event)

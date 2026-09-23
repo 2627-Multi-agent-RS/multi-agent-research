@@ -54,7 +54,9 @@ def _build_citations(findings: list[Finding]) -> list[Citation]:
     return list(seen.values())
 
 
-def _apply_warning_block(content: str, analysis: dict[str, Any]) -> tuple[str, list[str]]:
+def _apply_warning_block(
+    content: str, analysis: dict[str, Any]
+) -> tuple[str, list[str]]:
     """Graceful degradation bằng code — không để LLM tự quyết định."""
     warnings: list[str] = []
     needs_warning = (

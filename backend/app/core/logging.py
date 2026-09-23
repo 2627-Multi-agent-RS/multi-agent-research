@@ -1,4 +1,5 @@
 """Structured Loguru configuration."""
+
 import sys
 
 from loguru import logger

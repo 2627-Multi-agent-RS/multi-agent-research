@@ -22,14 +22,20 @@ class Settings(BaseSettings):
 
     gemini_api_key: str = Field(default="", validation_alias="GEMINI_API_KEY")
     tavily_api_key: str = Field(default="", validation_alias="TAVILY_API_KEY")
-    primary_llm_model: str = Field(default="gemini-2.0-flash", validation_alias="PRIMARY_LLM_MODEL")
-    fallback_llm_model: str = Field(default="gemini-1.5-flash", validation_alias="FALLBACK_LLM_MODEL")
+    primary_llm_model: str = Field(
+        default="gemini-2.0-flash", validation_alias="PRIMARY_LLM_MODEL"
+    )
+    fallback_llm_model: str = Field(
+        default="gemini-1.5-flash", validation_alias="FALLBACK_LLM_MODEL"
+    )
     environment: str = Field(default="development", validation_alias="ENVIRONMENT")
     host: str = Field(default="0.0.0.0", validation_alias="HOST")
     port: int = Field(default=8000, ge=1, le=65535, validation_alias="PORT")
     log_level: str = Field(default="INFO", validation_alias="LOG_LEVEL")
     log_dir: Path = Field(default=Path("./storage/logs"), validation_alias="LOG_DIR")
-    checkpoint_db_path: str = Field(default="./storage/checkpoints.db", validation_alias="CHECKPOINT_DB_PATH")
+    checkpoint_db_path: str = Field(
+        default="./storage/checkpoints.db", validation_alias="CHECKPOINT_DB_PATH"
+    )
     allowed_origins: list[str] = Field(
         default_factory=lambda: ["http://localhost:3000", "http://localhost:5173"],
         validation_alias="ALLOWED_ORIGINS",

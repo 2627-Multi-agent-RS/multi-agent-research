@@ -1,4 +1,5 @@
 """Realtime research WebSocket endpoint."""
+
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from loguru import logger
 from pydantic import ValidationError
@@ -23,7 +24,11 @@ async def research_websocket(websocket: WebSocket) -> None:
         # 1. Gửi xác nhận kết nối connection_ack
         await manager.send_event(
             websocket,
-            make_event(active_thread_id, "connection_ack", payload={"session_id": active_thread_id}),
+            make_event(
+                active_thread_id,
+                "connection_ack",
+                payload={"session_id": active_thread_id},
+            ),
         )
 
         # 2. Nhận yêu cầu khởi tạo nghiên cứu { topic, thread_id }
@@ -48,7 +53,9 @@ async def research_websocket(websocket: WebSocket) -> None:
     except WebSocketDisconnect:
         logger.bind(thread_id=active_thread_id).info("websocket_client_disconnected")
     except ValidationError as exc:
-        logger.bind(thread_id=active_thread_id).warning("invalid_research_request: {}", exc)
+        logger.bind(thread_id=active_thread_id).warning(
+            "invalid_research_request: {}", exc
+        )
         await manager.send_event(
             websocket,
             make_event(
@@ -60,7 +67,9 @@ async def research_websocket(websocket: WebSocket) -> None:
             ),
         )
     except Exception as exc:  # noqa: BLE001
-        logger.bind(thread_id=active_thread_id).exception("research_stream_failed: {}", exc)
+        logger.bind(thread_id=active_thread_id).exception(
+            "research_stream_failed: {}", exc
+        )
         await manager.send_event(
             websocket,
             make_event(

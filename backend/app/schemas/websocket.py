@@ -1,4 +1,5 @@
 """WebSocket data contracts shared with the frontend."""
+
 from datetime import datetime, timezone
 from typing import Any, Literal
 from uuid import uuid4
@@ -17,7 +18,9 @@ EventType = Literal[
 
 class ResearchStartRequest(BaseModel):
     topic: str = Field(min_length=5, max_length=500, description="Đề tài nghiên cứu")
-    thread_id: str = Field(min_length=1, max_length=128, description="Định danh phiên nghiên cứu")
+    thread_id: str = Field(
+        min_length=1, max_length=128, description="Định danh phiên nghiên cứu"
+    )
 
     @field_validator("topic")
     @classmethod

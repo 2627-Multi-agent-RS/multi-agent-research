@@ -77,8 +77,10 @@ async def _invoke_with_retry(
     messages: Sequence[BaseMessage],
     structured_schema: type[T] | None = None,
 ) -> T | BaseMessage:
-    target = model.with_structured_output(structured_schema) if structured_schema else model
-    return await target.ainvoke(messages)
+    target = (
+        model.with_structured_output(structured_schema) if structured_schema else model
+    )
+    return await target.ainvoke(messages)  # type: ignore[return-value]  # with_structured_output's Runnable output type isn't precisely inferred by mypy
 
 
 @overload

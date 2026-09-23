@@ -1,4 +1,5 @@
 """FastAPI entry point for the Multi-Agent Research System."""
+
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 

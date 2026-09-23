@@ -1,4 +1,5 @@
 """Safe lifecycle management for active WebSocket connections."""
+
 from collections import defaultdict
 
 from fastapi import WebSocket, WebSocketDisconnect
@@ -29,7 +30,9 @@ class ConnectionManager:
             self._connections.pop(thread_id, None)
         logger.bind(thread_id=thread_id).info("websocket_disconnected")
 
-    def move_to_thread(self, websocket: WebSocket, old_thread_id: str, new_thread_id: str) -> None:
+    def move_to_thread(
+        self, websocket: WebSocket, old_thread_id: str, new_thread_id: str
+    ) -> None:
         """Chuyển WebSocket sang thread_id mới khi client gửi payload với thread_id khác."""
         if old_thread_id == new_thread_id:
             return
@@ -43,7 +46,9 @@ class ConnectionManager:
             await websocket.send_json(event.model_dump(mode="json"))
             return True
         except (RuntimeError, OSError, WebSocketDisconnect) as exc:
-            logger.bind(thread_id=event.thread_id).warning("websocket_send_failed: {}", exc)
+            logger.bind(thread_id=event.thread_id).warning(
+                "websocket_send_failed: {}", exc
+            )
             self.disconnect(websocket, event.thread_id)
             return False
 
