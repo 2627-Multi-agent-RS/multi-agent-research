@@ -9,6 +9,7 @@ node_modules/
 dist/
 dist-ssr/
 *.local
+*.tsbuildinfo
 .pnpm-store/
 .vite/
 npm-debug.log*
@@ -58,6 +59,7 @@ htmlcov/
 **/storage/*.db*
 **/storage/*.sqlite*
 !**/storage/.gitkeep
+**/storage/logs/
 checkpoint_data/
 
 # IDE & Editor
@@ -72,3 +74,7 @@ checkpoint_data/
 # Operating System
 .DS_Store
 Thumbs.db
+# Node / Frontend
+node_modules/
+dist/
+*.local

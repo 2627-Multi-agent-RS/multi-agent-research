@@ -4,8 +4,8 @@ from typing import Final, Literal
 
 from app.graph.state import AgentState
 
-RESEARCHER_NODE: Final[str] = "researcher"
-WRITER_NODE: Final[str] = "writer"
+RESEARCHER_NODE: Final = "researcher"
+WRITER_NODE: Final = "writer"
 MAX_RESEARCH_RETRIES: Final[int] = 1
 
 RouteDestination = Literal["researcher", "writer"]

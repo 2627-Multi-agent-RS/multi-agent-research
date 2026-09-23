@@ -1,8 +1,12 @@
+"""Gemini model factory with bounded retry and fallback behavior."""
+
+from collections.abc import Sequence
 from typing import TypeVar, overload
 
 from google.api_core.exceptions import ResourceExhausted, ServiceUnavailable
 from langchain_core.messages import BaseMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
+from loguru import logger
 from pydantic import BaseModel
 from tenacity import (
     retry,
@@ -14,6 +18,8 @@ from tenacity import (
 from app.core.config import settings
 
 T = TypeVar("T", bound=BaseModel)
+
+RETRYABLE_LLM_ERRORS = (ResourceExhausted, ServiceUnavailable)
 
 
 class LLMFactory:
@@ -45,39 +51,79 @@ class LLMFactory:
 
 
 @overload
+async def _invoke_with_retry(
+    model: ChatGoogleGenerativeAI,
+    messages: Sequence[BaseMessage],
+    structured_schema: type[T],
+) -> T: ...
+
+
+@overload
+async def _invoke_with_retry(
+    model: ChatGoogleGenerativeAI,
+    messages: Sequence[BaseMessage],
+    structured_schema: None = None,
+) -> BaseMessage: ...
+
+
+@retry(
+    reraise=True,
+    stop=stop_after_attempt(3),
+    wait=wait_random_exponential(min=1, max=10),
+    retry=retry_if_exception_type(RETRYABLE_LLM_ERRORS),
+)
+async def _invoke_with_retry(
+    model: ChatGoogleGenerativeAI,
+    messages: Sequence[BaseMessage],
+    structured_schema: type[T] | None = None,
+) -> T | BaseMessage:
+    target = model.with_structured_output(structured_schema) if structured_schema else model
+    return await target.ainvoke(messages)
+
+
+@overload
 async def invoke_with_resilience(
     model: ChatGoogleGenerativeAI,
-    prompt_messages: list[BaseMessage],
+    prompt_messages: Sequence[BaseMessage],
     structured_schema: type[T],
+    fallback_model: ChatGoogleGenerativeAI | None = None,
 ) -> T: ...
 
 
 @overload
 async def invoke_with_resilience(
     model: ChatGoogleGenerativeAI,
-    prompt_messages: list[BaseMessage],
+    prompt_messages: Sequence[BaseMessage],
     structured_schema: None = None,
+    fallback_model: ChatGoogleGenerativeAI | None = None,
 ) -> BaseMessage: ...
 
 
-@retry(
-    stop=stop_after_attempt(3),
-    wait=wait_random_exponential(min=1, max=10),
-    retry=retry_if_exception_type((ResourceExhausted, ServiceUnavailable)),
-    reraise=True,
-)
 async def invoke_with_resilience(
     model: ChatGoogleGenerativeAI,
-    prompt_messages: list[BaseMessage],
+    prompt_messages: Sequence[BaseMessage],
     structured_schema: type[T] | None = None,
+    fallback_model: ChatGoogleGenerativeAI | None = None,
 ) -> T | BaseMessage:
     """
     Invoke an LLM asynchronously with exponential backoff retry for transient 429/503 errors.
+
+    If the primary model exhausts its 3 retry attempts while hitting a retryable error
+    (429 Resource Exhausted / 503 Service Unavailable), automatically switches to the
+    fallback model for one more attempt cycle.
+
     Returns either a validated Pydantic model instance or a BaseMessage.
     """
-    if structured_schema is not None:
-        target = model.with_structured_output(structured_schema)
-        result = await target.ainvoke(prompt_messages)
-        return result
+    try:
+        return await _invoke_with_retry(model, prompt_messages, structured_schema)
+    except RETRYABLE_LLM_ERRORS:
+        logger.warning("primary_llm_exhausted_retries_switching_to_fallback")
+        fallback = fallback_model or LLMFactory.get_fallback_model()
+        return await _invoke_with_retry(fallback, prompt_messages, structured_schema)
 
-    return await model.ainvoke(prompt_messages)
+
+__all__ = [
+    "RETRYABLE_LLM_ERRORS",
+    "LLMFactory",
+    "invoke_with_resilience",
+]
