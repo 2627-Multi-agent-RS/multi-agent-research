@@ -1,11 +1,20 @@
 # app/agents/analyst/agent.py
+"""Analyst Agent node implementation."""
+
 import os
-from typing import Any
+from typing import Any, TypedDict
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 from app.agents.analyst.prompts import ANALYST_SYSTEM_PROMPT
+from app.graph.state import AgentState
 from app.schemas.research import AnalystOutput, Finding
+
+
+class AnalystUpdate(TypedDict, total=False):
+    analysis: AnalystOutput
+    retry_count: int
+    errors: list[str]
 
 
 # ============================================================
@@ -30,13 +39,13 @@ async def _invoke_temp(
 # ============================================================
 
 
-async def run_analyst(state: dict[str, Any]) -> dict[str, Any]:
-    """Node Analyst: nhận findings từ state, trả về AnalystOutput đã kiểm định."""
+async def run_analyst(state: AgentState) -> AnalystUpdate:
+    """Execute analysis, verification, and conflict detection on collected findings."""
+    retry_count = state.get("retry_count", 0)
     raw_findings = state.get("findings", [])
-    findings = [Finding(**f) for f in raw_findings]
+    findings = [Finding(**f) if isinstance(f, dict) else f for f in raw_findings]
 
     if not findings:
-        # Không có dữ liệu đầu vào -> trả về ngay, không gọi LLM tốn phí
         fallback = AnalystOutput(
             status="needs_more_research",
             confidence_score=0.0,
@@ -45,7 +54,11 @@ async def run_analyst(state: dict[str, Any]) -> dict[str, Any]:
             insights=[],
             limitations=["Không có dữ liệu findings đầu vào để phân tích."],
         )
-        return {"analysis": fallback.model_dump()}
+        return AnalystUpdate(
+            analysis=fallback,
+            retry_count=retry_count,
+            errors=list(state.get("errors", [])),
+        )
 
     model = _get_temp_model(temperature=0.1)
     prompt = [
@@ -58,8 +71,7 @@ async def run_analyst(state: dict[str, Any]) -> dict[str, Any]:
             model, prompt, structured_schema=AnalystOutput
         )
     except Exception as e:  # noqa: BLE001
-        # Chưa có retry thật (chờ Dũng), nên tạm bắt lỗi để không sập cả graph
-        fallback = AnalystOutput(
+        result = AnalystOutput(
             status="needs_more_research",
             confidence_score=0.0,
             verified_findings=[],
@@ -67,6 +79,12 @@ async def run_analyst(state: dict[str, Any]) -> dict[str, Any]:
             insights=[],
             limitations=[f"Lỗi khi gọi LLM: {e!s}"],
         )
-        return {"analysis": fallback.model_dump()}
 
-    return {"analysis": result.model_dump()}
+    return AnalystUpdate(
+        analysis=result,
+        retry_count=retry_count,
+        errors=list(state.get("errors", [])),
+    )
+
+
+__all__ = ["AnalystUpdate", "run_analyst"]

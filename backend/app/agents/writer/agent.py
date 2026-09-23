@@ -1,11 +1,19 @@
 # app/agents/writer/agent.py
+"""Writer Agent node implementation."""
+
 import os
-from typing import Any
+from typing import Any, TypedDict
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 from app.agents.writer.prompts import WRITER_SYSTEM_PROMPT
+from app.graph.state import AgentState
 from app.schemas.research import Citation, Finding, WriterOutput
+
+
+class WriterUpdate(TypedDict, total=False):
+    final_report: WriterOutput
+    errors: list[str]
 
 
 # ============================================================
@@ -46,9 +54,7 @@ def _build_citations(findings: list[Finding]) -> list[Citation]:
     return list(seen.values())
 
 
-def _apply_warning_block(
-    content: str, analysis: dict[str, Any]
-) -> tuple[str, list[str]]:
+def _apply_warning_block(content: str, analysis: dict[str, Any]) -> tuple[str, list[str]]:
     """Graceful degradation bằng code — không để LLM tự quyết định."""
     warnings: list[str] = []
     needs_warning = (
@@ -73,10 +79,20 @@ def _apply_warning_block(
     return content, warnings
 
 
-async def run_writer(state: dict[str, Any]) -> dict[str, Any]:
+def _to_dict(obj: Any) -> dict[str, Any]:
+    """analysis trong state có thể là dict (từ node khác serialize) hoặc AnalystOutput object."""
+    if hasattr(obj, "model_dump"):
+        return obj.model_dump()
+    return obj or {}
+
+
+async def run_writer(state: AgentState) -> WriterUpdate:
     """Node Writer: nhận analysis đã kiểm định, sinh báo cáo Markdown hoàn chỉnh."""
-    analysis = state.get("analysis", {})
-    verified_findings = [Finding(**f) for f in analysis.get("verified_findings", [])]
+    analysis = _to_dict(state.get("analysis"))
+    raw_findings = analysis.get("verified_findings", []) or state.get("findings", [])
+    verified_findings = [
+        Finding(**f) if isinstance(f, dict) else f for f in raw_findings
+    ]
 
     citations = _build_citations(verified_findings)
     citations_text = "\n".join(f"[{c.id}] {c.title} - {c.url}" for c in citations)
@@ -113,4 +129,10 @@ async def run_writer(state: dict[str, Any]) -> dict[str, Any]:
     result.citations = citations
     result.warnings = extra_warnings
 
-    return {"final_report": result.model_dump()}
+    return WriterUpdate(
+        final_report=result,
+        errors=list(state.get("errors", [])),
+    )
+
+
+__all__ = ["WriterUpdate", "run_writer"]
