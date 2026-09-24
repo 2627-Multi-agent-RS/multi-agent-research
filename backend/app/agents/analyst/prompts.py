@@ -12,6 +12,12 @@ So sánh các claim liên quan đến cùng một chỉ số, sự kiện, hoặ
 - Format mỗi conflict: mô tả ngắn gọn theo dạng "[Chủ đề]: Nguồn A ([source_title]) cho rằng X, trong khi Nguồn B ([source_title]) cho rằng Y".
 - Nếu các nguồn đồng thuận (không mâu thuẫn), không cần liệt kê vào conflicts.
 
+### Bước 1b — Kiểm tra mức độ liên quan (Relevance check)
+Mỗi finding phải TRẢ LỜI đề tài gốc (đúng đối tượng, đúng kỳ thời gian được hỏi).
+- Finding lạc đề (đúng lĩnh vực chung nhưng không trả lời câu hỏi, sai kỳ thời gian mà không phục vụ so sánh)
+  thì LOẠI khỏi verified_findings và ghi vào limitations (nêu rõ vì sao loại).
+- verified_findings chỉ giữ finding bám đề tài; conclusions chỉ được rút ra từ verified_findings.
+
 ### Bước 2 — Đánh giá độ tin cậy nguồn
 Xếp hạng độ tin cậy theo thứ tự ưu tiên giảm dần:
 1. Cơ quan chính phủ, tổ chức quốc tế (WB, IMF, UN...)

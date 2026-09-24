@@ -1,0 +1,228 @@
+{
+  "topic": "Thị trường game mobile 2026",
+  "retry_count": 1,
+  "errors": [],
+  "plan": {
+    "topic": "Thị trường game mobile 2026",
+    "sub_queries": [
+      "Quy mô doanh thu và tốc độ tăng trưởng dự báo của thị trường game mobile năm 2026",
+      "Các thể loại game mobile dẫn đầu xu hướng và chiếm thị phần lớn nhất năm 2026",
+      "Hành vi người dùng và xu hướng chi tiêu trong game mobile tại các thị trường trọng điểm năm 2026",
+      "Tác động của công nghệ mới như AI và Cloud Gaming đến sự phát triển của game mobile năm 2026"
+    ],
+    "expected_metrics": [
+      "Doanh thu toàn cầu thị trường game mobile năm 2026",
+      "Tỷ lệ tăng trưởng kép hàng năm (CAGR) đến năm 2026",
+      "Tỷ trọng doanh thu theo thể loại game",
+      "Mức chi tiêu trung bình trên mỗi người dùng (ARPU) năm 2026"
+    ]
+  },
+  "findings": [
+    {
+      "claim": "Doanh thu từ game mobile toàn cầu được dự báo sẽ cán mốc 126,1 tỷ USD vào năm 2025.",
+      "evidence": "Theo dự báo, doanh thu từ game mobile sẽ cán mốc 126,1 tỷ USD vào năm 2025.",
+      "source_url": "https://vneconomy.vn/thi-truong-ung-dung-di-dong-uoc-dat-626-ty-usd-vao-nam-2030.htm",
+      "source_title": "Thị trường ứng dụng di động ước đạt 626 tỷ USD vào năm 2030 - VnEconomy",
+      "published_at": "2025-03-25"
+    },
+    {
+      "claim": "Số lượng người chơi game mobile trên thế giới được dự kiến sẽ tăng 8% vào năm 2025, đạt 1,9 tỷ người dùng.",
+      "evidence": "Dự kiến, số lượng người chơi game mobile trên thế giới sẽ tăng 8% vào năm 2025, đạt 1,9 tỷ người dùng.",
+      "source_url": "https://vneconomy.vn/thi-truong-ung-dung-di-dong-uoc-dat-626-ty-usd-vao-nam-2030.htm",
+      "source_title": "Thị trường ứng dụng di động ước đạt 626 tỷ USD vào năm 2030 - VnEconomy",
+      "published_at": "2025-03-25"
+    },
+    {
+      "claim": "Thiết bị di động chiếm 49% tổng doanh thu ngành game toàn cầu trong năm qua.",
+      "evidence": "Trong năm qua, thiết bị di động chiếm 49% tổng doanh thu ngành game toàn cầu, vượt xa console (28%) và PC (23%).",
+      "source_url": "https://vneconomy.vn/thi-truong-ung-dung-di-dong-uoc-dat-626-ty-usd-vao-nam-2030.htm",
+      "source_title": "Thị trường ứng dụng di động ước đạt 626 tỷ USD vào năm 2030 - VnEconomy",
+      "published_at": "2025-03-25"
+    },
+    {
+      "claim": "Ngành game Việt Nam ước đạt doanh thu 1,66 tỷ USD năm 2025 và dự kiến chạm mốc 2,42 tỷ USD vào năm 2029 với tốc độ tăng trưởng ước đạt 9,77% mỗi năm.",
+      "evidence": "ngành game Việt Nam đang khẳng định vị thế quan trọng trong nền kinh tế số, doanh thu ước đạt 1,66 tỷ USD năm 2025. Tốc độ tăng trưởng của ngành game Việt Nam ước đạt 9,77% mỗi năm, chạm mốc 2,42 tỷ USD vào năm 2029.",
+      "source_url": "https://dantri.com.vn/kinh-doanh/don-song-dau-tu-ngoai-nganh-game-viet-nham-moc-242-ty-usd-20260509090239239.htm",
+      "source_title": "Đón sóng đầu tư ngoại, ngành game Việt nhắm mốc 2,42 tỷ USD | Báo Dân trí",
+      "published_at": "2026-05-10"
+    },
+    {
+      "claim": "Thị trường eSports toàn cầu năm 2025 đạt quy mô doanh thu lên tới 3 tỷ USD, với tốc độ tăng trưởng kép đạt 19% mỗi năm.",
+      "evidence": "Thị trường eSports toàn cầu năm 2025 cũng đạt quy mô doanh thu lên tới 3 tỷ USD, với tốc độ tăng trưởng kép đạt 19% mỗi năm, theo Business Research Company.",
+      "source_url": "https://dantri.com.vn/kinh-doanh/don-song-dau-tu-ngoai-nganh-game-viet-nham-moc-242-ty-usd-20260509090239239.htm",
+      "source_title": "Đón sóng đầu tư ngoại, ngành game Việt nhắm mốc 2,42 tỷ USD | Báo Dân trí",
+      "published_at": "2026-05-10"
+    },
+    {
+      "claim": "Khu vực Đông Nam Á đạt doanh thu eSports 77,4 triệu USD năm 2025 và được dự báo tăng lên 154,9 triệu USD vào năm 2034.",
+      "evidence": "Riêng khu vực Đông Nam Á đạt doanh thu 77,4 triệu USD năm 2025 và được dự báo tăng lên 154,9 triệu USD vào năm 2034, với tốc độ tăng trưởng kép 7,62% mỗi năm.",
+      "source_url": "https://dantri.com.vn/kinh-doanh/don-song-dau-tu-ngoai-nganh-game-viet-nham-moc-242-ty-usd-20260509090239239.htm",
+      "source_title": "Đón sóng đầu tư ngoại, ngành game Việt nhắm mốc 2,42 tỷ USD | Báo Dân trí",
+      "published_at": "2026-05-10"
+    },
+    {
+      "claim": "Việt Nam có khoảng 28,2 triệu người đã và đang tham gia các hoạt động giải trí điện tử, chiếm gần 30% dân số.",
+      "evidence": "Tại Việt Nam, có khoảng 28,2 triệu người đã và đang tham gia các hoạt động giải trí điện tử, chiếm gần 30% dân số, theo Statista.",
+      "source_url": "https://dantri.com.vn/kinh-doanh/don-song-dau-tu-ngoai-nganh-game-viet-nham-moc-242-ty-usd-20260509090239239.htm",
+      "source_title": "Đón sóng đầu tư ngoại, ngành game Việt nhắm mốc 2,42 tỷ USD | Báo Dân trí",
+      "published_at": "2026-05-10"
+    },
+    {
+      "claim": "Việt Nam xếp thứ 6 thế giới về tốc độ tăng trưởng số lượng nhà phát hành (publisher) với tỷ lệ 27%.",
+      "evidence": "Theo dữ liệu từ Sensor Tower, Việt Nam hiện xếp thứ 6 thế giới về tốc độ tăng trưởng số lượng nhà phát hành (publisher) với tỷ lệ 27%.",
+      "source_url": "https://dantri.com.vn/kinh-doanh/don-song-dau-tu-ngoai-nganh-game-viet-nham-moc-242-ty-usd-20260509090239239.htm",
+      "source_title": "Đón sóng đầu tư ngoại, ngành game Việt nhắm mốc 2,42 tỷ USD | Báo Dân trí",
+      "published_at": "2026-05-10"
+    },
+    {
+      "claim": "Năm 2026, nền tảng di động được dự báo sẽ dẫn đầu về phân khúc nền tảng trong thị trường AI trong phát triển game với mức thị phần cao nhất là 32,2%.",
+      "evidence": "The mobile platform is forecasted to be dominant in terms of platform segment in 2026 with the highest market share of 32.2%.",
+      "source_url": "https://dimensionmarketresearch.com/report/ai-in-game-development-market",
+      "source_title": "AI in Game Development Market Size, Share & Trends 2035",
+      "published_at": null
+    },
+    {
+      "claim": "Khu vực Châu Á - Thái Bình Dương (APAC) dự kiến chiếm 24,5% thị phần doanh thu toàn cầu trong thị trường AI trong phát triển game vào năm 2026.",
+      "evidence": "as it is poised to have 24.5% of the global revenue share in 2026. This includes China, Japan, South Korea, India, Australia and New Zealand, ASEAN, and the rest of Asia Pacific",
+      "source_url": "https://dimensionmarketresearch.com/report/ai-in-game-development-market",
+      "source_title": "AI in Game Development Market Size, Share & Trends 2035",
+      "published_at": null
+    },
+    {
+      "claim": "Bức tranh toàn cảnh thị trường game mobile Việt Nam",
+      "evidence": "Skip to content\n\n + Lost Password?\n Search)\n\n 21/09/2026\n\nTomorrow Marketers\n\nHọc viện Marketing Đa quốc gia\n\n Follow us:\n Facebook\n Twitter\n Snapchat\n More \"More\")\n\nTomorrow Marketers\n\nHọc viện Marketing Đa quốc gia\n\n Search)\n\n Share \"Share on Facebook\")\n Tweet \"Share on Twitter\")\n Pin it \"Pin this Post\")\n Share \"Share on Whatsapp\")\n Email \"Share via Email\")\n More \"More\")\n\n# Bức tranh toàn cảnh thị trường game mobile Việt Nam\n\nThị trường 26.416 0 Shares\n\nmarketing foundation [...] Doanh thu của",
+      "source_url": "https://blog.tomorrowmarketers.org/buc-tranh-toan-canh-thi-truong-game-mobile-viet-nam",
+      "source_title": "Bức tranh toàn cảnh thị trường game mobile Việt Nam",
+      "published_at": "2020-01-29"
+    },
+    {
+      "claim": "Việt Nam dự kiến đạt 2,7 tỷ USD ở lĩnh vực game và ứng ...",
+      "evidence": "Image\n\nGiảng viên: Ms. Ngô Thùy Anh\n\nImage\n\nHình thức học: Trực tiếp\n\nImage\n\nThời gian dự kiến: Tháng 8,9,10/2026\n\nImage\n\nĐịa điểm: Hà Nội\n\nNhìn lại thị trường, hiểu đúng khách hàng, thiết kế lại gói giá trị, mô hình kinh doanh, mô hình doanh thu và chuyển thành kế hoạch phát triển thị trường có thể triển khai ngay.\n\nXEM THÊM\n\nImage\n\n### MARKETING SỐ VÀ XY DỰNG THƯƠNG HIỆU ĐA KÊNH\n\nImage\n\nGiảng viên: Ms. Ngô Thùy Anh\n\nImage\n\nHình thức học: Trực tiếp\n\nImage\n\nThời gian dự kiến: Tháng 8,9,10/2026 [",
+      "source_url": "https://onetouch.edu.vn/viet-nam-du-kien-dat-27-ty-usd-o-linh-vuc-game-va-ung-dung-nam-2026",
+      "source_title": "Việt Nam dự kiến đạt 2,7 tỷ USD ở lĩnh vực game và ứng ...",
+      "published_at": "2026-08-09"
+    },
+    {
+      "claim": "Báo cáo thị trường ứng dụng game 2026",
+      "evidence": "Game mobile duy trì sức hút là một trong những phân khúc ứng dụng tăng trưởng mạnh mẽ nhất, nhưng cuộc đua tăng trưởng đang thay đổi. Báo cáo thị trường ứng dụng game 2026 cung cấp benchmark mới nhất, xu hướng và góc nhìn chuyên sâu, giúp hiểu rõ hành vi người chơi và phát triển ứng dụng.\n\nKhám phá lý do giữ chân người dùng trở thành chiến lược then chốt, trong bối cảnh các studio dồn sức vào người chơi có LTV cao, củng cố vòng lặp tương tác và kéo dài vòng đời sản phẩm. [...] Tiahn Wetzler\n\nDir",
+      "source_url": "https://www.adjust.com/vi/resources/ebooks/gaming-app-insights",
+      "source_title": "Báo cáo thị trường ứng dụng game 2026",
+      "published_at": null
+    },
+    {
+      "claim": "Top 12 game mobile hay nhất 2026 - Cập nhật mới nhất",
+      "evidence": "Free Fire đã khẳng định vị thế là game mobile hay nhất tại Việt Nam với khoảng 123 triệu người chơi hoạt động hàng tháng toàn cầu (theo Sensor Tower). Game này được tối ưu hoá đặc biệt cho các thiết bị có cấu hình thấp, phù hợp với đa số người chơi Việt Nam. Với thời gian một trận chỉ khoảng 10 phút, Free Fire mang đến trải nghiệm battle royale nhanh gọn và hấp dẫn. Hệ sinh thái esports của game cũng vô cùng phát triển tại Việt Nam với các giải đấu FFWS và FFPL có tổng giải thưởng lên tới hàng [",
+      "source_url": "https://fpt.vn/tin-tuc/top-game-mobile-hay-12388.html",
+      "source_title": "Top 12 game mobile hay nhất 2026 - Cập nhật mới nhất",
+      "published_at": "2026-04-10"
+    },
+    {
+      "claim": "Thị trường ứng dụng di động ước đạt 626 tỷ USD vào năm ...",
+      "evidence": "Theo dự báo, doanh thu từ game mobile sẽ cán mốc 126,1 tỷ USD vào năm 2025. Năm 2024, game tiếp tục là danh mục ứng dụng phổ biến nhất trên App Store và Google Play. Đáng chú ý, 13/15 tựa game mobile mới có doanh thu cao nhất năm nay đều thuộc các công ty có trụ sở tại chu Á.\n\nTrong năm qua, thiết bị di động chiếm 49% tổng doanh thu ngành game toàn cầu, vượt xa console (28%) và PC (23%). Dự kiến, số lượng người chơi game mobile trên thế giới sẽ tăng 8% vào năm 2025, đạt 1,9 tỷ người dùng. [...] ",
+      "source_url": "https://vneconomy.vn/thi-truong-ung-dung-di-dong-uoc-dat-626-ty-usd-vao-nam-2030.htm",
+      "source_title": "Thị trường ứng dụng di động ước đạt 626 tỷ USD vào năm ...",
+      "published_at": "2025-03-25"
+    }
+  ],
+  "analysis": {
+    "status": "complete",
+    "confidence_score": 0.82,
+    "verified_findings": [
+      {
+        "claim": "Doanh thu từ game mobile toàn cầu được dự báo sẽ cán mốc 126,1 tỷ USD vào năm 2025.",
+        "evidence": "Theo dự báo, doanh thu từ game mobile sẽ cán mốc 126,1 tỷ USD vào năm 2025.",
+        "source_url": "https://vneconomy.vn/thi-truong-ung-dung-di-dong-uoc-dat-626-ty-usd-vao-nam-2030.htm",
+        "source_title": "Thị trường ứng dụng di động ước đạt 626 tỷ USD vào năm 2030 - VnEconomy",
+        "published_at": "2025-03-25"
+      },
+      {
+        "claim": "Số lượng người chơi game mobile trên thế giới được dự kiến sẽ tăng 8% vào năm 2025, đạt 1,9 tỷ người dùng.",
+        "evidence": "Dự kiến, số lượng người chơi game mobile trên thế giới sẽ tăng 8% vào năm 2025, đạt 1,9 tỷ người dùng.",
+        "source_url": "https://vneconomy.vn/thi-truong-ung-dung-di-dong-uoc-dat-626-ty-usd-vao-nam-2030.htm",
+        "source_title": "Thị trường ứng dụng di động ước đạt 626 tỷ USD vào năm 2030 - VnEconomy",
+        "published_at": "2025-03-25"
+      },
+      {
+        "claim": "Thiết bị di động chiếm 49% tổng doanh thu ngành game toàn cầu trong năm qua.",
+        "evidence": "Trong năm qua, thiết bị di động chiếm 49% tổng doanh thu ngành game toàn cầu, vượt xa console (28%) và PC (23%).",
+        "source_url": "https://vneconomy.vn/thi-truong-ung-dung-di-dong-uoc-dat-626-ty-usd-vao-nam-2030.htm",
+        "source_title": "Thị trường ứng dụng di động ước đạt 626 tỷ USD vào năm 2030 - VnEconomy",
+        "published_at": "2025-03-25"
+      },
+      {
+        "claim": "Ngành game Việt Nam ước đạt doanh thu 1,66 tỷ USD năm 2025 và dự kiến chạm mốc 2,42 tỷ USD vào năm 2029 với tốc độ tăng trưởng ước đạt 9,77% mỗi năm.",
+        "evidence": "ngành game Việt Nam đang khẳng định vị thế quan trọng trong nền kinh tế số, doanh thu ước đạt 1,66 tỷ USD năm 2025. Tốc độ tăng trưởng của ngành game Việt Nam ước đạt 9,77% mỗi năm, chạm mốc 2,42 tỷ USD vào năm 2029.",
+        "source_url": "https://dantri.com.vn/kinh-doanh/don-song-dau-tu-ngoai-nganh-game-viet-nham-moc-242-ty-usd-20260509090239239.htm",
+        "source_title": "Đón sóng đầu tư ngoại, ngành game Việt nhắm mốc 2,42 tỷ USD | Báo Dân trí",
+        "published_at": "2026-05-10"
+      },
+      {
+        "claim": "Việt Nam có khoảng 28,2 triệu người đã và đang tham gia các hoạt động giải trí điện tử, chiếm gần 30% dân số.",
+        "evidence": "Tại Việt Nam, có khoảng 28,2 triệu người đã và đang tham gia các hoạt động giải trí điện tử, chiếm gần 30% dân số, theo Statista.",
+        "source_url": "https://dantri.com.vn/kinh-doanh/don-song-dau-tu-ngoai-nganh-game-viet-nham-moc-242-ty-usd-20260509090239239.htm",
+        "source_title": "Đón sóng đầu tư ngoại, ngành game Việt nhắm mốc 2,42 tỷ USD | Báo Dân trí",
+        "published_at": "2026-05-10"
+      },
+      {
+        "claim": "Việt Nam xếp thứ 6 thế giới về tốc độ tăng trưởng số lượng nhà phát hành (publisher) với tỷ lệ 27%.",
+        "evidence": "Theo dữ liệu từ Sensor Tower, Việt Nam hiện xếp thứ 6 thế giới về tốc độ tăng trưởng số lượng nhà phát hành (publisher) với tỷ lệ 27%.",
+        "source_url": "https://dantri.com.vn/kinh-doanh/don-song-dau-tu-ngoai-nganh-game-viet-nham-moc-242-ty-usd-20260509090239239.htm",
+        "source_title": "Đón sóng đầu tư ngoại, ngành game Việt nhắm mốc 2,42 tỷ USD | Báo Dân trí",
+        "published_at": "2026-05-10"
+      },
+      {
+        "claim": "Năm 2026, nền tảng di động được dự báo sẽ dẫn đầu về phân khúc nền tảng trong thị trường AI trong phát triển game với mức thị phần cao nhất là 32,2%.",
+        "evidence": "The mobile platform is forecasted to be dominant in terms of platform segment in 2026 with the highest market share of 32.2%.",
+        "source_url": "https://dimensionmarketresearch.com/report/ai-in-game-development-market",
+        "source_title": "AI in Game Development Market Size, Share & Trends 2035",
+        "published_at": null
+      }
+    ],
+    "conclusions": [
+      "Doanh thu từ game mobile toàn cầu được dự báo đạt 126,1 tỷ USD vào năm 2025 trên phạm vi toàn cầu, với số lượng người chơi tăng 8% đạt 1,9 tỷ người dùng và thiết bị di động chiếm 49% tổng doanh thu ngành game toàn cầu.",
+      "Ngành game Việt Nam đạt doanh thu ước tính 1,66 tỷ USD trong năm 2025 và dự kiến chạm mốc 2,42 tỷ USD vào năm 2029 trên phạm vi quốc gia, với tốc độ tăng trưởng ước đạt 9,77% mỗi năm.",
+      "Thị trường giải trí điện tử tại Việt Nam ghi nhận khoảng 28,2 triệu người tham gia, chiếm gần 30% dân số, đồng thời Việt Nam xếp thứ 6 thế giới về tốc độ tăng trưởng số lượng nhà phát hành với tỷ lệ 27% trên phạm vi toàn cầu trong năm 2025-2026.",
+      "Nền tảng di động được dự báo dẫn đầu phân khúc nền tảng trong thị trường AI ứng dụng vào phát triển game với mức thị phần cao nhất là 32,2% vào năm 2026 trên phạm vi toàn cầu."
+    ],
+    "insights": [
+      "Thiết bị di động tiếp tục duy trì vị thế thống trị trong ngành game toàn cầu, chiếm gần một nửa tổng doanh thu và là phân khúc chủ lực trong việc tích hợp công nghệ AI phát triển game vào năm 2026.",
+      "Việt Nam đang thể hiện tiềm năng tăng trưởng mạnh mẽ cả về số lượng người chơi lẫn tốc độ gia tăng số lượng nhà phát hành game (publisher) đứng thứ 6 thế giới."
+    ],
+    "conflicts": [
+      "Dự báo doanh thu lĩnh vực game và ứng dụng tại Việt Nam năm 2026: Nguồn Onetouch ước tính đạt 2,7 tỷ USD vào tháng 8-10/2026, trong khi các nguồn khác tập trung vào doanh thu ngành game thuần túy năm 2025 đạt 1,66 tỷ USD và mốc 2,42 tỷ USD vào năm 2029."
+    ],
+    "limitations": [
+      "Một số bài viết blog hoặc thông tin khóa học (như Tomorrow Marketers hoặc Onetouch) có mốc thời gian cũ hoặc tiêu đề mang tính chất quảng cáo dịch vụ đào tạo nên độ chính xác chi tiết về con số dự báo năm 2026 cần được đối chiếu thêm với các báo cáo kiểm toán chuyên ngành."
+    ],
+    "follow_up_request": null
+  },
+  "final_report": {
+    "status": "complete",
+    "title": "Báo cáo Tổng quan Thị trường Game Di động và Tiềm năng Phát triển tại Việt Nam",
+    "content": "## ⚠️ Cảnh báo & Giới hạn dữ liệu\n\n**Mâu thuẫn số liệu phát hiện được:**\n- Dự báo doanh thu lĩnh vực game và ứng dụng tại Việt Nam năm 2026: Nguồn Onetouch ước tính đạt 2,7 tỷ USD vào tháng 8-10/2026, trong khi các nguồn khác tập trung vào doanh thu ngành game thuần túy năm 2025 đạt 1,66 tỷ USD và mốc 2,42 tỷ USD vào năm 2029.\n\n**Giới hạn dữ liệu:**\n- Một số bài viết blog hoặc thông tin khóa học (như Tomorrow Marketers hoặc Onetouch) có mốc thời gian cũ hoặc tiêu đề mang tính chất quảng cáo dịch vụ đào tạo nên độ chính xác chi tiết về con số dự báo năm 2026 cần được đối chiếu thêm với các báo cáo kiểm toán chuyên ngành.\n\n---\n\n# Executive Summary\nNgành công nghiệp game di động toàn cầu đang chứng kiến sự tăng trưởng mạnh mẽ với quy mô doanh thu dự kiến đạt 126,1 tỷ USD và 1,9 tỷ người dùng vào năm 2025 [1]. Tại Việt Nam, thị trường giải trí điện tử ghi nhận khoảng 28,2 triệu người tham gia, cùng tốc độ tăng trưởng doanh thu ấn tượng ước đạt 9,77% mỗi năm để hướng tới mốc 2,42 tỷ USD vào năm 2029 [2]. Đồng thời, sự bùng nổ của trí tuệ nhân tạo (AI) trong phát triển game cũng đặt nền tảng di động vào vị trí dẫn đầu phân khúc với thị phần dự báo đạt 32,2% vào năm 2026 [3].\n\n# Findings\nCác dữ liệu và chỉ số thống kê chi tiết về thị trường game di động toàn cầu và Việt Nam được tổng hợp cụ thể trong bảng dưới đây:\n\n| Đối tượng/Hạng mục | Số liệu (kèm đơn vị, phạm vi, thời điểm) | Nguồn |\n| :--- | :--- | :--- |\n| Doanh thu game mobile toàn cầu (2025) | 126,1 tỷ USD, trên phạm vi toàn cầu | [1] |\n| Số lượng người chơi game mobile toàn cầu (2025) | 1,9 tỷ người dùng, tăng trưởng 8% trên phạm vi toàn cầu | [1] |\n| Thị phần doanh thu thiết bị di động ngành game | 49% tổng doanh thu ngành game toàn cầu trong năm qua | [1] |\n| Doanh thu ngành game Việt Nam (2025) | 1,66 tỷ USD, trên phạm vi quốc gia | [2] |\n| Doanh thu dự kiến ngành game Việt Nam (2029) | 2,42 tỷ USD, với tốc độ tăng trưởng 9,77% mỗi năm | [2] |\n| Số lượng người tham gia giải trí điện tử tại Việt Nam | Khoảng 28,2 triệu người, chiếm gần 30% dân số | [2] |\n| Xếp hạng tốc độ tăng trưởng nhà phát hành game tại Việt Nam | Xếp thứ 6 thế giới với tỷ lệ tăng trưởng nhà phát hành (publisher) đạt 27% | [2] |\n| Thị phần nền tảng di động trong thị trường AI phát triển game (2026) | Dẫn đầu phân khúc nền tảng với mức thị phần cao nhất là 32,2% | [3] |\n\n# In-depth Analysis\nThiết bị di động tiếp tục khẳng định vị thế chủ đạo trong hệ sinh thái ngành game toàn cầu, vượt qua các nền tảng truyền thống khác như console và PC khi chiếm đến 49% tổng doanh thu ngành game trong năm qua [1]. Sự thống trị này gắn liền với lượng người chơi khổng lồ lên tới 1,9 tỷ người dùng vào năm 2025 [1]. \n\nTại khu vực nội địa, Việt Nam đang vươn lên thành một điểm sáng với tốc độ phát triển nhanh chóng. Với khoảng 28,2 triệu người tham gia giải trí điện tử (chiếm gần 30% dân số) [2], thị trường trong nước tạo ra nền tảng tiêu dùng vững chắc để thúc đẩy doanh thu dự kiến đạt 1,66 tỷ USD trong năm 2025 và hướng tới 2,42 tỷ USD vào năm 2029 nhờ mức tăng trưởng ổn định 9,77% mỗi năm [2]. Đáng chú ý, năng lực sản xuất và phát triển game của Việt Nam cũng được quốc tế công nhận khi xếp thứ 6 trên thế giới về tốc độ gia tăng số lượng nhà phát hành (publisher) với tỷ lệ 27% [2].\n\n# Outlook\nXu hướng hội tụ giữa công nghệ và thiết bị di động sẽ tiếp tục được định hình rõ nét trong thời gian tới. Vào năm 2026, nền tảng di động được dự báo sẽ tiếp tục dẫn đầu phân khúc nền tảng trong thị trường ứng dụng AI vào phát triển game, chiếm mức thị phần cao nhất là 32,2% [3]. Sự kết hợp giữa quy mô thị phần di động lớn và công nghệ AI tiên tiến hứa hẹn sẽ mang đến những bước tiến đột phá cho các nhà phát hành game trên toàn cầu cũng như tại Việt Nam.",
+    "citations": [
+      {
+        "id": 1,
+        "title": "Thị trường ứng dụng di động ước đạt 626 tỷ USD vào năm 2030 - VnEconomy",
+        "url": "https://vneconomy.vn/thi-truong-ung-dung-di-dong-uoc-dat-626-ty-usd-vao-nam-2030.htm",
+        "snippet": "Theo dự báo, doanh thu từ game mobile sẽ cán mốc 126,1 tỷ USD vào năm 2025."
+      },
+      {
+        "id": 2,
+        "title": "Đón sóng đầu tư ngoại, ngành game Việt nhắm mốc 2,42 tỷ USD | Báo Dân trí",
+        "url": "https://dantri.com.vn/kinh-doanh/don-song-dau-tu-ngoai-nganh-game-viet-nham-moc-242-ty-usd-20260509090239239.htm",
+        "snippet": "ngành game Việt Nam đang khẳng định vị thế quan trọng trong nền kinh tế số, doanh thu ước đạt 1,66 tỷ USD năm 2025. Tốc độ tăng trưởng của ngành game Việt Nam ước đạt 9,77% mỗi năm, chạm mốc 2,42 tỷ U"
+      },
+      {
+        "id": 3,
+        "title": "AI in Game Development Market Size, Share & Trends 2035",
+        "url": "https://dimensionmarketresearch.com/report/ai-in-game-development-market",
+        "snippet": "The mobile platform is forecasted to be dominant in terms of platform segment in 2026 with the highest market share of 32.2%."
+      }
+    ],
+    "warnings": [
+      "Dự báo doanh thu lĩnh vực game và ứng dụng tại Việt Nam năm 2026: Nguồn Onetouch ước tính đạt 2,7 tỷ USD vào tháng 8-10/2026, trong khi các nguồn khác tập trung vào doanh thu ngành game thuần túy năm 2025 đạt 1,66 tỷ USD và mốc 2,42 tỷ USD vào năm 2029.",
+      "Một số bài viết blog hoặc thông tin khóa học (như Tomorrow Marketers hoặc Onetouch) có mốc thời gian cũ hoặc tiêu đề mang tính chất quảng cáo dịch vụ đào tạo nên độ chính xác chi tiết về con số dự báo năm 2026 cần được đối chiếu thêm với các báo cáo kiểm toán chuyên ngành."
+    ]
+  }
+}

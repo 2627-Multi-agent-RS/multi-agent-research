@@ -52,9 +52,10 @@ async def run_analyst(state: "AgentState") -> AnalystUpdate:
         )
 
     model = LLMFactory.get_primary_model(temperature=0.1, timeout=30)
+    topic = state.get("topic", "") if isinstance(state, dict) else ""
     prompt = [
         {"role": "system", "content": ANALYST_SYSTEM_PROMPT},
-        {"role": "user", "content": f"Findings:\n{[f.model_dump() for f in findings]}"},
+        {"role": "user", "content": f"Đề tài gốc: {topic}\n\nFindings:\n{[f.model_dump() for f in findings]}"},
     ]
 
     try:

@@ -20,5 +20,14 @@ QUY TẮC BẮT BUỘC:
 9. Nếu hai tài liệu đưa số liệu mâu thuẫn nhau, tách thành 2 findings riêng (mỗi finding giữ
    evidence và nguồn của mình) — việc kết luận thuộc về Analyst, không tự chọn phe.
 
+BỘ LỌC MỨC ĐỘ LIÊN QUAN (RELEVANCE GATE — áp dụng mọi lĩnh vực):
+10. Chỉ trích xuất finding TRẢ LỜI TRỰC TIẾP truy vấn và đề tài gốc (đối tượng, số liệu,
+    mốc thời gian được hỏi). Tài liệu đúng chủ đề chung nhưng trả lời câu hỏi khác
+    (ví dụ: hỏi sự kiện 2026 mà tài liệu chỉ nói bối cảnh 2022) thì BỎ QUA, ghi vào limitations.
+11. Neo mốc thời gian của đề tài: ưu tiên dữ liệu đúng kỳ được hỏi; dữ liệu kỳ khác chỉ lấy
+    làm nền so sánh ngắn gọn, không để lấn át findings chính.
+12. Ưu tiên finding chi tiết cấp thực thể (tên cụ thể + số liệu + thời điểm) hơn nhận định
+    vĩ mô chung chung — báo cáo cần liệt kê được "ai/cái gì, bao nhiêu, khi nào".
+
 ĐỊNH DẠNG: trả đúng schema ResearcherOutput (status, findings, search_queries, limitations).
 Mục limitations ghi rõ: truy vấn nào thiếu nguồn, tài liệu nào không cào được toàn văn."""

@@ -1,0 +1,211 @@
+{
+  "topic": "Thị trường chuyển nhượng bóng đá châu Âu mùa hè 2026 chi tiết",
+  "retry_count": 0,
+  "errors": [],
+  "plan": {
+    "topic": "Thị trường chuyển nhượng bóng đá châu Âu mùa hè 2026 chi tiết",
+    "sub_queries": [
+      "Các thương vụ chuyển nhượng bom tấn bóng đá châu Âu mùa hè 2026 cầu thủ phí chuyển nhượng",
+      "Tổng chi tiêu mua sắm cầu thủ mùa hè 2026 của các câu lạc bộ Ngoại hạng Anh La Liga Serie A Bundesliga",
+      "Diễn biến chi tiết và giá trị hợp đồng của các bản hợp đồng tự do đáng chú ý mùa hè 2026",
+      "Thống kê số liệu tài chính tổng quan thị trường chuyển nhượng hè 2026 các giải vô địch quốc gia hàng đầu châu Âu"
+    ],
+    "expected_metrics": [
+      "Phí chuyển nhượng từng cầu thủ",
+      "Tổng chi tiêu theo từng câu lạc bộ",
+      "Tổng chi tiêu theo từng giải đấu",
+      "Mức lương cầu thủ trong các hợp đồng mới",
+      "Số lượng bản hợp đồng thành công và hợp đồng tự do"
+    ]
+  },
+  "findings": [
+    {
+      "claim": "Các câu lạc bộ Ngoại hạng Anh đã chi tổng cộng 3,48 tỷ bảng (khoảng 3,935 tỷ euro) trong kỳ chuyển nhượng mùa hè 2026",
+      "evidence": "Các CLB Premier League đã phá kỷ lục chi tiêu chuyển nhượng khi bỏ ra tổng cộng 3,48 tỷ bảng để chiêu mộ những tân binh trong mùa hè này.",
+      "source_url": "https://thethaovanhoa.vn/thong-ke-chi-tieu-chuyen-nhuong-mua-he-premier-league-tiep-tuc-bo-xa-cac-giai-dau-hang-dau-chau-au-2026090208524712.htm",
+      "source_title": "THỐNG KÊ chi tiêu chuyển nhượng mùa hè: Premier League tiếp tục bỏ xa các giải đấu hàng đầu châu Âu",
+      "published_at": "2026-09-02"
+    },
+    {
+      "claim": "Mức chi tiêu chuyển nhượng mùa hè 2026 của Serie A là 843,6 triệu bảng (1,16 tỷ euro)",
+      "evidence": "Các CLB Serie A đã chi 843,6 triệu bảng, tiếp theo là LaLiga (603,1 triệu bảng), Bundesliga (507,6 triệu bảng) và Ligue 1 (490,6 triệu bảng).",
+      "source_url": "https://thethaovanhoa.vn/thong-ke-chi-tieu-chuyen-nhuong-mua-he-premier-league-tiep-tuc-bo-xa-cac-giai-dau-hang-dau-chau-au-2026090208524712.htm",
+      "source_title": "THỐNG KÊ chi tiêu chuyển nhượng mùa hè: Premier League tiếp tục bỏ xa các giải đấu hàng đầu châu Âu",
+      "published_at": "2026-09-02"
+    },
+    {
+      "claim": "Mức chi tiêu chuyển nhượng mùa hè 2026 của La Liga là 603,1 triệu bảng (743 triệu euro)",
+      "evidence": "Các CLB Serie A đã chi 843,6 triệu bảng, tiếp theo là LaLiga (603,1 triệu bảng), Bundesliga (507,6 triệu bảng) và Ligue 1 (490,6 triệu bảng).",
+      "source_url": "https://thethaovanhoa.vn/thong-ke-chi-tieu-chuyen-nhuong-mua-he-premier-league-tiep-tuc-bo-xa-cac-giai-dau-hang-dau-chau-au-2026090208524712.htm",
+      "source_title": "THỐNG KÊ chi tiêu chuyển nhượng mùa hè: Premier League tiếp tục bỏ xa các giải đấu hàng đầu châu Âu",
+      "published_at": "2026-09-02"
+    },
+    {
+      "claim": "Mức chi tiêu chuyển nhượng mùa hè 2026 của Bundesliga là 507,6 triệu bảng (782 triệu euro)",
+      "evidence": "Các CLB Serie A đã chi 843,6 triệu bảng, tiếp theo là LaLiga (603,1 triệu bảng), Bundesliga (507,6 triệu bảng) và Ligue 1 (490,6 triệu bảng).",
+      "source_url": "https://thethaovanhoa.vn/thong-ke-chi-tieu-chuyen-nhuong-mua-he-premier-league-tiep-tuc-bo-xa-cac-giai-dau-hang-dau-chau-au-2026090208524712.htm",
+      "source_title": "THỐNG KÊ chi tiêu chuyển nhượng mùa hè: Premier League tiếp tục bỏ xa các giải đấu hàng đầu châu Âu",
+      "published_at": "2026-09-02"
+    },
+    {
+      "claim": "Mức chi tiêu chuyển nhượng mùa hè 2026 của Ligue 1 là 490,6 triệu bảng (600 triệu euro)",
+      "evidence": "Các CLB Serie A đã chi 843,6 triệu bảng, tiếp theo là LaLiga (603,1 triệu bảng), Bundesliga (507,6 triệu bảng) và Ligue 1 (490,6 triệu bảng).",
+      "source_url": "https://thethaovanhoa.vn/thong-ke-chi-tieu-chuyen-nhuong-mua-he-premier-league-tiep-tuc-bo-xa-cac-giai-dau-hang-dau-chau-au-2026090208524712.htm",
+      "source_title": "THỐNG KÊ chi tiêu chuyển nhượng mùa hè: Premier League tiếp tục bỏ xa các giải đấu hàng đầu châu Âu",
+      "published_at": "2026-09-02"
+    },
+    {
+      "claim": "Man City chiêu mộ Enzo Fernandez từ Chelsea với mức phí 125 triệu bảng (145 triệu euro)",
+      "evidence": "Cơn địa chấn thực sự diễn ra trong ngày cuối cùng của phiên chợ hè khi Man City mang về Enzo Fernandez từ Chelsea với mức phí 125 triệu bảng",
+      "source_url": "https://tienphong.vn/nhung-cai-nhat-trong-ky-chuyen-nhuong-he-2026-tai-chau-au-post1873045.tpo",
+      "source_title": "Những cái nhất trong kỳ chuyển nhượng Hè 2026 tại châu ...",
+      "published_at": "2026-09-02"
+    },
+    {
+      "claim": "Man City mua Elliot Anderson từ Nottingham Forest với mức phí 116 triệu bảng (135 triệu euro)",
+      "evidence": "Họ bạo chi 116 triệu bảng cho Elliot Anderson từ Nottingham Forest và đón thần đồng 18 tuổi Ayyoub Bouaddi từ Lille với giá hơn 81 triệu bảng.",
+      "source_url": "https://tienphong.vn/nhung-cai-nhat-trong-ky-chuyen-nhuong-he-2026-tai-chau-au-post1873045.tpo",
+      "source_title": "Những cái nhất trong kỳ chuyển nhượng Hè 2026 tại châu ...",
+      "published_at": "2026-09-02"
+    },
+    {
+      "claim": "Man City chiêu mộ Ayyoub Bouaddi từ Lille với giá hơn 81 triệu bảng",
+      "evidence": "Họ bạo chi 116 triệu bảng cho Elliot Anderson từ Nottingham Forest và đón thần đồng 18 tuổi Ayyoub Bouaddi từ Lille với giá hơn 81 triệu bảng.",
+      "source_url": "https://tienphong.vn/nhung-cai-nhat-trong-ky-chuyen-nhuong-he-2026-tai-chau-au-post1873045.tpo",
+      "source_title": "Những cái nhất trong kỳ chuyển nhượng Hè 2026 tại châu ...",
+      "published_at": "2026-09-02"
+    },
+    {
+      "claim": "Real Madrid là câu lạc bộ ngoài nước Anh chi tiêu mạnh tay nhất mùa hè 2026 với ngân sách xấp xỉ 188,7 triệu bảng (225 triệu euro)",
+      "evidence": "Với ngân sách xấp xỉ 188,7 triệu bảng (khoảng 225 triệu euro), đội bóng Hoàng gia Tây Ban Nha là CLB ngoài biên giới nước Anh chi tiêu mạnh tay nhất",
+      "source_url": "https://tienphong.vn/nhung-cai-nhat-trong-ky-chuyen-nhuong-he-2026-tai-chau-au-post1873045.tpo",
+      "source_title": "Những cái nhất trong kỳ chuyển nhượng Hè 2026 tại châu ...",
+      "published_at": "2026-09-02"
+    },
+    {
+      "claim": "Ibrahima Konate có giá trị thị trường lên tới 45 triệu euro và là cái tên đắt giá nhất trong nhóm cầu thủ đáo hạn hợp đồng vào ngày 30 tháng 6 năm 2026",
+      "evidence": "Ibrahima Konate hiện là cái tên đắt giá nhất trong nhóm này với giá trị thị trường lên tới 45 triệu euro trên sàn giao dịch quốc tế.",
+      "source_url": "https://bongda.com.vn/chuyen-nhuong-tu-do-hoa-canh-bac-hap-dan-voi-cac-ong-lon-chau-au-d834674.html",
+      "source_title": "Chuyển nhượng tự do hóa canh bạc hấp dẫn với các ông lớn châu Âu",
+      "published_at": null
+    }
+  ],
+  "analysis": {
+    "status": "complete",
+    "confidence_score": 0.85,
+    "verified_findings": [
+      {
+        "claim": "Các câu lạc bộ Ngoại hạng Anh đã chi tổng cộng 3,48 tỷ bảng (khoảng 3,935 tỷ euro) trong kỳ chuyển nhượng mùa hè 2026",
+        "evidence": "Các CLB Premier League đã phá kỷ lục chi tiêu chuyển nhượng khi bỏ ra tổng cộng 3,48 tỷ bảng để chiêu mộ những tân binh trong mùa hè này.",
+        "source_url": "https://thethaovanhoa.vn/thong-ke-chi-tieu-chuyen-nhuong-mua-he-premier-league-tiep-tuc-bo-xa-cac-giai-dau-hang-dau-chau-au-2026090208524712.htm",
+        "source_title": "THỐNG KÊ chi tiêu chuyển nhượng mùa hè: Premier League tiếp tục bỏ xa các giải đấu hàng đầu châu Âu",
+        "published_at": "2026-09-02"
+      },
+      {
+        "claim": "Mức chi tiêu chuyển nhượng mùa hè 2026 của Serie A là 843,6 triệu bảng",
+        "evidence": "Các CLB Serie A đã chi 843,6 triệu bảng, tiếp theo là LaLiga (603,1 triệu bảng), Bundesliga (507,6 triệu bảng) và Ligue 1 (490,6 triệu bảng).",
+        "source_url": "https://thethaovanhoa.vn/thong-ke-chi-tieu-chuyen-nhuong-mua-he-premier-league-tiep-tuc-bo-xa-cac-giai-dau-hang-dau-chau-au-2026090208524712.htm",
+        "source_title": "THỐNG KÊ chi tiêu chuyển nhượng mùa hè: Premier League tiếp tục bỏ xa các giải đấu hàng đầu châu Âu",
+        "published_at": "2026-09-02"
+      },
+      {
+        "claim": "Mức chi tiêu chuyển nhượng mùa hè 2026 của La Liga là 603,1 triệu bảng",
+        "evidence": "Các CLB Serie A đã chi 843,6 triệu bảng, tiếp theo là LaLiga (603,1 triệu bảng), Bundesliga (507,6 triệu bảng) và Ligue 1 (490,6 triệu bảng).",
+        "source_url": "https://thethaovanhoa.vn/thong-ke-chi-tieu-chuyen-nhuong-mua-he-premier-league-tiep-tuc-bo-xa-cac-giai-dau-hang-dau-chau-au-2026090208524712.htm",
+        "source_title": "THỐNG KÊ chi tiêu chuyển nhượng mùa hè: Premier League tiếp tục bỏ xa các giải đấu hàng đầu châu Âu",
+        "published_at": "2026-09-02"
+      },
+      {
+        "claim": "Mức chi tiêu chuyển nhượng mùa hè 2026 của Bundesliga là 507,6 triệu bảng",
+        "evidence": "Các CLB Serie A đã chi 843,6 triệu bảng, tiếp theo là LaLiga (603,1 triệu bảng), Bundesliga (507,6 triệu bảng) và Ligue 1 (490,6 triệu bảng).",
+        "source_url": "https://thethaovanhoa.vn/thong-ke-chi-tieu-chuyen-nhuong-mua-he-premier-league-tiep-tuc-bo-xa-cac-giai-dau-hang-dau-chau-au-2026090208524712.htm",
+        "source_title": "THỐNG KÊ chi tiêu chuyển nhượng mùa hè: Premier League tiếp tục bỏ xa các giải đấu hàng đầu châu Âu",
+        "published_at": "2026-09-02"
+      },
+      {
+        "claim": "Mức chi tiêu chuyển nhượng mùa hè 2026 của Ligue 1 là 490,6 triệu bảng",
+        "evidence": "Các CLB Serie A đã chi 843,6 triệu bảng, tiếp theo là LaLiga (603,1 triệu bảng), Bundesliga (507,6 triệu bảng) và Ligue 1 (490,6 triệu bảng).",
+        "source_url": "https://thethaovanhoa.vn/thong-ke-chi-tieu-chuyen-nhuong-mua-he-premier-league-tiep-tuc-bo-xa-cac-giai-dau-hang-dau-chau-au-2026090208524712.htm",
+        "source_title": "THỐNG KÊ chi tiêu chuyển nhượng mùa hè: Premier League tiếp tục bỏ xa các giải đấu hàng đầu châu Âu",
+        "published_at": "2026-09-02"
+      },
+      {
+        "claim": "Man City chiêu mộ Enzo Fernandez từ Chelsea với mức phí 125 triệu bảng",
+        "evidence": "Cơn địa chấn thực sự diễn ra trong ngày cuối cùng của phiên chợ hè khi Man City mang về Enzo Fernandez từ Chelsea với mức phí 125 triệu bảng",
+        "source_url": "https://tienphong.vn/nhung-cai-nhat-trong-ky-chuyen-nhuong-he-2026-tai-chau-au-post1873045.tpo",
+        "source_title": "Những cái nhất trong kỳ chuyển nhượng Hè 2026 tại châu ...",
+        "published_at": "2026-09-02"
+      },
+      {
+        "claim": "Man City mua Elliot Anderson từ Nottingham Forest với mức phí 116 triệu bảng",
+        "evidence": "Họ bạo chi 116 triệu bảng cho Elliot Anderson từ Nottingham Forest và đón thần đồng 18 tuổi Ayyoub Bouaddi từ Lille với giá hơn 81 triệu bảng.",
+        "source_url": "https://tienphong.vn/nhung-cai-nhat-trong-ky-chuyen-nhuong-he-2026-tai-chau-au-post1873045.tpo",
+        "source_title": "Những cái nhất trong kỳ chuyển nhượng Hè 2026 tại châu ...",
+        "published_at": "2026-09-02"
+      },
+      {
+        "claim": "Man City chiêu mộ Ayyoub Bouaddi từ Lille với giá hơn 81 triệu bảng",
+        "evidence": "Họ bạo chi 116 triệu bảng cho Elliot Anderson từ Nottingham Forest và đón thần đồng 18 tuổi Ayyoub Bouaddi từ Lille với giá hơn 81 triệu bảng.",
+        "source_url": "https://tienphong.vn/nhung-cai-nhat-trong-ky-chuyen-nhuong-he-2026-tai-chau-au-post1873045.tpo",
+        "source_title": "Những cái nhất trong kỳ chuyển nhượng Hè 2026 tại châu ...",
+        "published_at": "2026-09-02"
+      },
+      {
+        "claim": "Real Madrid là câu lạc bộ ngoài nước Anh chi tiêu mạnh tay nhất mùa hè 2026 với ngân sách xấp xỉ 188,7 triệu bảng",
+        "evidence": "Với ngân sách xấp xỉ 188,7 triệu bảng (khoảng 225 triệu euro), đội bóng Hoàng gia Tây Ban Nha là CLB ngoài biên giới nước Anh chi tiêu mạnh tay nhất",
+        "source_url": "https://tienphong.vn/nhung-cai-nhat-trong-ky-chuyen-nhuong-he-2026-tai-chau-au-post1873045.tpo",
+        "source_title": "Những cái nhất trong kỳ chuyển nhượng Hè 2026 tại châu ...",
+        "published_at": "2026-09-02"
+      },
+      {
+        "claim": "Ibrahima Konate có giá trị thị trường lên tới 45 triệu euro và là cái tên đắt giá nhất trong nhóm cầu thủ đáo hạn hợp đồng vào ngày 30 tháng 6 năm 2026",
+        "evidence": "Ibrahima Konate hiện là cái tên đắt giá nhất trong nhóm này với giá trị thị trường lên tới 45 triệu euro trên sàn giao dịch quốc tế.",
+        "source_url": "https://bongda.com.vn/chuyen-nhuong-tu-do-hoa-canh-bac-hap-dan-với-các-ong-lon-chau-au-d834674.html",
+        "source_title": "Chuyển nhượng tự do hóa canh bạc hấp dẫn với các ông lớn châu Âu",
+        "published_at": null
+      }
+    ],
+    "conclusions": [
+      "Các câu lạc bộ thuộc giải Ngoại hạng Anh đã chi tổng cộng 3,48 tỷ bảng (khoảng 3,935 tỷ euro) trong kỳ chuyển nhượng mùa hè 2026.",
+      "Các giải vô địch quốc gia hàng đầu châu Âu khác ghi nhận mức chi tiêu chuyển nhượng trong mùa hè 2026 lần lượt là: Serie A với 843,6 triệu bảng, La Liga với 603,1 triệu bảng, Bundesliga với 507,6 triệu bảng và Ligue 1 với 490,6 triệu bảng.",
+      "Câu lạc bộ Man City đã thực hiện các thương vụ chuyển nhượng lớn trong kỳ chuyển nhượng mùa hè 2026 bao gồm việc chiêu mộ Enzo Fernandez từ Chelsea với giá 125 triệu bảng, mua Elliot Anderson từ Nottingham Forest với giá 116 triệu bảng và đón Ayyoub Bouaddi từ Lille với mức giá hơn 81 triệu bảng.",
+      "Real Madrid là câu lạc bộ ngoài nước Anh chi tiêu mạnh tay nhất trong kỳ chuyển nhượng mùa hè 2026 với ngân sách xấp xỉ 188,7 triệu bảng (khoảng 225 triệu euro).",
+      "Cầu thủ Ibrahima Konate có giá trị thị trường đạt 45 triệu euro, giữ vị trí đắt giá nhất trong nhóm cầu thủ đáo hạn hợp đồng vào ngày 30 tháng 6 năm 2026."
+    ],
+    "insights": [
+      "Ngoại hạng Anh tiếp tục duy trì vị thế áp đảo về tiềm lực tài chính khi mức chi tiêu của giải đấu này vượt xa tổng mức chi của các giải đấu lớn còn lại tại châu Âu trong kỳ chuyển nhượng mùa hè 2026.",
+      "Thị trường chuyển nhượng tự do với các cầu thủ đáo hạn hợp đồng vào tháng 6 năm 2026 thu hút sự quan tâm lớn từ các ông lớn châu Âu, tiêu biểu là trường hợp định giá 45 triệu euro của Ibrahima Konate."
+    ],
+    "conflicts": [],
+    "limitations": [
+      "Một số nguồn tin báo chí không cung cấp chính xác ngày tháng xuất bản (published_at là null) đối với bài viết về chuyển nhượng tự do."
+    ],
+    "follow_up_request": null
+  },
+  "final_report": {
+    "status": "complete",
+    "title": "Báo cáo Tổng quan Thị trường Chuyển nhượng Cầu thủ Châu Âu Kỳ Mùa Hè 2026",
+    "content": "# Báo cáo Tổng quan Thị trường Chuyển nhượng Cầu thủ Châu Âu Kỳ Mùa Hè 2026\n\n## Executive Summary\nKỳ chuyển nhượng mùa hè 2026 ghi nhận sự thống trị áp đảo về tiềm lực tài chính của Ngoại hạng Anh khi các câu lạc bộ thuộc giải đấu này chi tới 3,48 tỷ bảng, vượt xa mọi giải vô địch quốc gia khác tại châu Âu [1]. Trong bối cảnh đó, các câu lạc bộ lớn như Manchester City và Real Madrid tiếp tục thực hiện những thương vụ bom tấn có giá trị cao [2]. Đồng thời, thị trường chuyển nhượng tự do cũng thu hút sự quan tâm đặc biệt với những cái tên chất lượng cao đáo hạn hợp đồng [3].\n\n## Findings\nCác câu lạc bộ thuộc giải Ngoại hạng Anh đã chi tổng cộng 3,48 tỷ bảng (khoảng 3,935 tỷ euro) trong kỳ chuyển nhượng mùa hè 2026 [1]. Mức chi tiêu này tạo ra khoảng cách lớn so với các giải vô địch quốc gia hàng đầu châu Âu khác [1]. Chi tiết về mức chi tiêu của các giải đấu lớn được thể hiện trong bảng dưới đây:\n\n| Giải đấu / Hạng mục | Số liệu chi tiêu (Kèm đơn vị, phạm vi, thời điểm) | Nguồn |\n| :--- | :--- | :--- |\n| Ngoại hạng Anh (Premier League) | 3,48 tỷ bảng (khoảng 3,935 tỷ euro), kỳ chuyển nhượng mùa hè 2026 | [1] |\n| Serie A | 843,6 triệu bảng, kỳ chuyển nhượng mùa hè 2026 | [1] |\n| La Liga | 603,1 triệu bảng, kỳ chuyển nhượng mùa hè 2026 | [1] |\n| Bundesliga | 507,6 triệu bảng, kỳ chuyển nhượng mùa hè 2026 | [1] |\n| Ligue 1 | 490,6 triệu bảng, kỳ chuyển nhượng mùa hè 2026 | [1] |\n\nBên cạnh đó, các câu lạc bộ lớn đã thực hiện nhiều thương vụ đáng chú ý:\n- Câu lạc bộ Man City đã thực hiện các thương vụ chuyển nhượng lớn trong kỳ chuyển nhượng mùa hè 2026 bao gồm việc chiêu mộ Enzo Fernandez từ Chelsea với giá 125 triệu bảng, mua Elliot Anderson từ Nottingham Forest với giá 116 triệu bảng và đón Ayyoub Bouaddi từ Lille với mức giá hơn 81 triệu bảng [2].\n- Real Madrid là câu lạc bộ ngoài nước Anh chi tiêu mạnh tay nhất trong kỳ chuyển nhượng mùa hè 2026 với ngân sách xấp xỉ 188,7 triệu bảng (khoảng 225 triệu euro) [2].\n- Cầu thủ Ibrahima Konate có giá trị thị trường đạt 45 triệu euro, giữ vị trí đắt giá nhất trong nhóm cầu thủ đáo hạn hợp đồng vào ngày 30 tháng 6 năm 2026 [3].\n\n## In-depth Analysis\nNgoại hạng Anh tiếp tục duy trì vị thế áp đảo về tiềm lực tài chính khi mức chi tiêu của giải đấu này vượt xa tổng mức chi của các giải đấu lớn còn lại tại châu Âu trong kỳ chuyển nhượng mùa hè 2026 [1]. Sự chênh lệch này thể hiện rõ qua việc tổng mức chi 3,48 tỷ bảng của Ngoại hạng Anh lớn hơn rất nhiều lần so với các giải đấu như Serie A (843,6 triệu bảng), La Liga (603,1 triệu bảng), Bundesliga (507,6 triệu bảng) hay Ligue 1 (490,6 triệu bảng) [1]. Trong khi các đội bóng Anh liên tục kích hoạt những thương vụ bom tấn có giá trị cao như việc Man City chiêu mộ Enzo Fernandez (125 triệu bảng), Elliot Anderson (116 triệu bảng) hay Ayyoub Bouaddi (hơn 81 triệu bảng) [2], các câu lạc bộ lục địa như Real Madrid cũng phải tối ưu hóa nguồn lực với mức chi tiêu 188,7 triệu bảng để duy trì tính cạnh tranh [2]. Song song với thị trường mua bán truyền thống, thị trường chuyển nhượng tự do với các cầu thủ đáo hạn hợp đồng vào tháng 6 năm 2026 thu hút sự quan tâm lớn từ các ông lớn châu Âu, tiêu biểu là trường hợp định giá 45 triệu euro của Ibrahima Konate [3].\n\n## Outlook\nXu hướng tài chính trong bóng đá châu Âu cho thấy sự phân hóa rõ rệt về nguồn vốn đầu tư giữa Ngoại hạng Anh và phần còn lại của châu Âu [1]. Tiềm lực tài chính vượt trội giúp các câu lạc bộ Anh tiếp tục dẫn dắt thị trường chuyển nhượng trong các chu kỳ tiếp theo [1]. Tuy nhiên, áp lực cạnh tranh cũng thúc đẩy các đại diện từ các giải đấu khác như Real Madrid phải có những chiến lược chuyển nhượng linh hoạt hơn [2]. Ngoài ra, việc tận dụng nguồn cầu thủ chất lượng cao đáo hạn hợp đồng như trường hợp của Ibrahima Konate (45 triệu euro) sẽ tiếp tục là chiến lược trọng tâm giúp các ông lớn tối ưu hóa chi phí và gia tăng sức mạnh đội hình [3].",
+    "citations": [
+      {
+        "id": 1,
+        "title": "THỐNG KÊ chi tiêu chuyển nhượng mùa hè: Premier League tiếp tục bỏ xa các giải đấu hàng đầu châu Âu",
+        "url": "https://thethaovanhoa.vn/thong-ke-chi-tieu-chuyen-nhuong-mua-he-premier-league-tiep-tuc-bo-xa-cac-giai-dau-hang-dau-chau-au-2026090208524712.htm",
+        "snippet": "Các CLB Premier League đã phá kỷ lục chi tiêu chuyển nhượng khi bỏ ra tổng cộng 3,48 tỷ bảng để chiêu mộ những tân binh trong mùa hè này."
+      },
+      {
+        "id": 2,
+        "title": "Những cái nhất trong kỳ chuyển nhượng Hè 2026 tại châu ...",
+        "url": "https://tienphong.vn/nhung-cai-nhat-trong-ky-chuyen-nhuong-he-2026-tai-chau-au-post1873045.tpo",
+        "snippet": "Cơn địa chấn thực sự diễn ra trong ngày cuối cùng của phiên chợ hè khi Man City mang về Enzo Fernandez từ Chelsea với mức phí 125 triệu bảng"
+      },
+      {
+        "id": 3,
+        "title": "Chuyển nhượng tự do hóa canh bạc hấp dẫn với các ông lớn châu Âu",
+        "url": "https://bongda.com.vn/chuyen-nhuong-tu-do-hoa-canh-bac-hap-dan-với-các-ong-lon-chau-au-d834674.html",
+        "snippet": "Ibrahima Konate hiện là cái tên đắt giá nhất trong nhóm này với giá trị thị trường lên tới 45 triệu euro trên sàn giao dịch quốc tế."
+      }
+    ],
+    "warnings": []
+  }
+}
