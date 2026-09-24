@@ -1,14 +1,14 @@
 # app/agents/writer/agent.py
 """Writer Agent node implementation."""
 
-import os
-from typing import Any, TypedDict
-
-from langchain_google_genai import ChatGoogleGenerativeAI
+from typing import Any, TYPE_CHECKING, TypedDict
 
 from app.agents.writer.prompts import WRITER_SYSTEM_PROMPT
-from app.graph.state import AgentState
 from app.schemas.research import Citation, Finding, WriterOutput
+from app.tools.llm.factory import LLMFactory
+
+if TYPE_CHECKING:
+    from app.graph.state import AgentState
 
 
 class WriterUpdate(TypedDict, total=False):
@@ -16,26 +16,17 @@ class WriterUpdate(TypedDict, total=False):
     errors: list[str]
 
 
-# ============================================================
-# TẠM THỜI — thay bằng import từ app.tools.llm.factory khi Dũng push xong
-# ============================================================
-def _get_temp_model(temperature: float = 0.3) -> ChatGoogleGenerativeAI:
-    return ChatGoogleGenerativeAI(
-        model="gemini-3.6-flash",
-        google_api_key=os.getenv("GEMINI_API_KEY"),
-        temperature=temperature,
-        timeout=30,
-    )
-
-
 async def _invoke_temp(
     model: Any, prompt_messages: list[dict[str, str]], structured_schema: Any
 ) -> Any:
-    target = model.with_structured_output(structured_schema)
-    return await target.ainvoke(prompt_messages)
-
-
-# ============================================================
+    """Gọi primary, lỗi thì thử 1 lần bằng fallback (GEMINI_FALLBACK_MODEL)."""
+    try:
+        target = model.with_structured_output(structured_schema)
+        return await target.ainvoke(prompt_messages)
+    except Exception:
+        fallback = LLMFactory.get_fallback_model()
+        target = fallback.with_structured_output(structured_schema)
+        return await target.ainvoke(prompt_messages)
 
 
 def _build_citations(findings: list[Finding]) -> list[Citation]:
@@ -88,7 +79,7 @@ def _to_dict(obj: Any) -> dict[str, Any]:
     return obj or {}
 
 
-async def run_writer(state: AgentState) -> WriterUpdate:
+async def run_writer(state: "AgentState") -> WriterUpdate:
     """Node Writer: nhận analysis đã kiểm định, sinh báo cáo Markdown hoàn chỉnh."""
     analysis = _to_dict(state.get("analysis"))
     raw_findings = analysis.get("verified_findings", []) or state.get("findings", [])
@@ -99,7 +90,7 @@ async def run_writer(state: AgentState) -> WriterUpdate:
     citations = _build_citations(verified_findings)
     citations_text = "\n".join(f"[{c.id}] {c.title} - {c.url}" for c in citations)
 
-    model = _get_temp_model(temperature=0.3)
+    model = LLMFactory.get_primary_model(temperature=0.3, timeout=30)
     prompt = [
         {"role": "system", "content": WRITER_SYSTEM_PROMPT},
         {

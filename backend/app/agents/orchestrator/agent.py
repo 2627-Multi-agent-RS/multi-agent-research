@@ -1,12 +1,13 @@
-from typing import TypedDict
+from typing import TYPE_CHECKING, TypedDict
 
 from langchain_core.messages import HumanMessage, SystemMessage
 
 from app.agents.orchestrator.prompts import ORCHESTRATOR_SYSTEM_PROMPT
-from app.graph.state import AgentState
 from app.schemas.research import ResearchPlan
 from app.tools.llm.factory import LLMFactory, invoke_with_resilience
 
+if TYPE_CHECKING:
+    from app.graph.state import AgentState
 
 class OrchestratorUpdate(TypedDict):
     """Specific partial state update returned by the Orchestrator node."""
@@ -15,7 +16,7 @@ class OrchestratorUpdate(TypedDict):
     search_queries: list[str]
 
 
-async def run_orchestrator(state: AgentState) -> OrchestratorUpdate:
+async def run_orchestrator(state: "AgentState") -> OrchestratorUpdate:
     """
     Node Orchestrator: Receives a raw research topic, decomposes it into 3-5
     analytical sub-queries with expected metrics, and updates the agent state.
@@ -36,6 +37,7 @@ async def run_orchestrator(state: AgentState) -> OrchestratorUpdate:
         model=model,
         prompt_messages=messages,
         structured_schema=ResearchPlan,
+        fallback_model=LLMFactory.get_fallback_model(temperature=0.2),
     )
 
     return {

@@ -66,9 +66,9 @@ async def search_duckduckgo(
     timeout: float = 20.0,
     region: str = "wt-wt",
 ) -> List[Dict[str, Any]]:
-    """Tìm kiếm 1 query qua DuckDuckGo (non-blocking wrapper).
+    """Search 1 query via DuckDuckGo (non-blocking wrapper).
 
-    region: 'wt-wt' quốc tế, 'us-en' nguồn tiếng Anh, 'vn-vi' nguồn Việt.
+    region: 'wt-wt' international, 'us-en' English sources, 'vn-vi' Vietnamese sources.
     """
     query = (query or "").strip()
     if not query:

@@ -1,4 +1,5 @@
 import asyncio
+import json
 from typing import Dict, List
 
 from loguru import logger
@@ -6,7 +7,7 @@ from trafilatura import extract, fetch_url
 
 
 def _sync_fetch_extract(url: str) -> tuple:
-    """Trả về (clean_text, published_date). Date có thể None nếu trang không ghi ngày."""
+    """Return (clean_text, published_date). Date may be None when the page carries no date."""
     downloaded = fetch_url(url)
     if not downloaded:
         return "", None
@@ -21,9 +22,7 @@ def _sync_fetch_extract(url: str) -> tuple:
             include_tables=False,
         )
         if meta_json:
-            import json as _json
-
-            date = _json.loads(meta_json).get("date")
+            date = json.loads(meta_json).get("date")
     except Exception:
         pass
     return text, date
@@ -49,7 +48,7 @@ async def scrape_articles(
     max_chars: int = 4000,
     max_concurrency: int = 3,
 ) -> Dict[str, str]:
-    """Crawl top-N URLs in parallel, return dict {url: clean_text}"""
+    """Crawl top-N URLs in parallel, return dict {url: clean_text}."""
     clean = [u.strip() for u in (urls or []) if u and u.strip()]
     if not clean:
         return {}
@@ -74,6 +73,10 @@ async def scrape_articles_with_dates(
     max_chars: int = 4000,
     max_concurrency: int = 3,
 ) -> Dict[str, dict]:
+    """Like scrape_articles but returns {url: {"text": ..., "date": ...}}.
+
+    Date is the publish date trafilatura infers from page metadata (may be None).
+    """
     clean = [u.strip() for u in (urls or []) if u and u.strip()]
     if not clean:
         return {}

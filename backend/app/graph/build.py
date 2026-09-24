@@ -2,9 +2,11 @@
 
 import sqlite3
 from pathlib import Path
+from typing import Final
 
 import aiosqlite
 from langgraph.checkpoint.base import BaseCheckpointSaver
+from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
 from langgraph.checkpoint.sqlite import SqliteSaver
 from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 from langgraph.graph import END, START, StateGraph
@@ -24,6 +26,18 @@ from app.graph.state import AgentState
 
 ORCHESTRATOR_NODE = "orchestrator"
 ANALYST_NODE = "analyst"
+
+CHECKPOINT_MSGPACK_ALLOWLIST: Final = [
+    ("app.schemas.research", "AnalystOutput"),
+    ("app.schemas.research", "Finding"),
+    ("app.schemas.research", "ResearchPlan"),
+    ("app.schemas.research", "WriterOutput"),
+]
+
+
+def make_checkpoint_serde() -> JsonPlusSerializer:
+    """Serde dùng chung cho mọi SQLite checkpointer của hệ thống."""
+    return JsonPlusSerializer(allowed_msgpack_modules=CHECKPOINT_MSGPACK_ALLOWLIST)
 
 
 def get_sqlite_checkpointer(
@@ -46,7 +60,7 @@ def get_sqlite_checkpointer(
         path_obj.parent.mkdir(parents=True, exist_ok=True)
 
     conn = sqlite3.connect(target_path, check_same_thread=False)
-    saver = SqliteSaver(conn)
+    saver = SqliteSaver(conn, serde=make_checkpoint_serde())
     saver.setup()
     return saver
 
@@ -71,7 +85,7 @@ async def get_async_sqlite_checkpointer(
         path_obj.parent.mkdir(parents=True, exist_ok=True)
 
     conn = await aiosqlite.connect(target_path)
-    saver = AsyncSqliteSaver(conn)
+    saver = AsyncSqliteSaver(conn, serde=make_checkpoint_serde())
     await saver.setup()
     return saver
 

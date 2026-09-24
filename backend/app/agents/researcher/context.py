@@ -1,3 +1,5 @@
+"""Merge search snippets + scraped full-text into one context block for Analyst/debug."""
+
 from typing import Any, Dict, List
 
 MAX_SNIPPET_CHARS = 800

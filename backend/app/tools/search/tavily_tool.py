@@ -9,14 +9,18 @@ from loguru import logger
 from tavily import AsyncTavilyClient
 
 _tavily_client = None
+_logged_no_key = False
 
 
 def _get_client():
-    global _tavily_client
+    global _tavily_client, _logged_no_key
     if _tavily_client is not None:
         return _tavily_client
     api_key = os.getenv("TAVILY_API_KEY", "")
     if not api_key:
+        if not _logged_no_key:
+            _logged_no_key = True
+            logger.info("TAVILY_API_KEY chưa cấu hình — bỏ qua Tavily, chỉ dùng DuckDuckGo.")
         return None
     try:
         _tavily_client = AsyncTavilyClient(api_key=api_key)
@@ -32,10 +36,10 @@ async def search_tavily(
     search_depth: str | None = None,
     timeout: float = 20.0,
 ) -> List[Dict[str, Any]]:
-    """Tìm kiếm 1 query qua Tavily, trả về list {url, title, content, score, source, query}.
+    """Search 1 query via Tavily, return list of {url, title, content, score, source, query}.
 
-    search_depth: "basic" (1 credit/query) hoặc "advanced" (2 credits/query).
-    Mặc định đọc TAVILY_SEARCH_DEPTH, fallback "basic" để tiết kiệm quota demo.
+    search_depth: "basic" (1 credit/query) or "advanced" (2 credits/query).
+    Defaults to TAVILY_SEARCH_DEPTH, falling back to "basic" to save demo quota.
     """
     query = (query or "").strip()
     if not query:

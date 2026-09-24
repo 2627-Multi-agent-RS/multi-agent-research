@@ -11,6 +11,17 @@ Executive Summary
 Findings
 [Trình bày các phát hiện chính theo dạng đoạn văn hoặc bullet points, MỖI claim quan trọng phải
 gắn số trích dẫn [n] ngay sau câu liên quan]
+
+## ĐỘ CHI TIẾT (BẮT BUỘC)
+1. MỌI verified finding được cung cấp đều phải xuất hiện trong báo cáo — không được
+   viết vài ý tổng quát rồi bỏ sót phần còn lại.
+2. Dữ liệu liệt kê được (nhiều đối tượng, nhiều mốc, nhiều chỉ số...) PHẢI trình bày
+   dạng bảng Markdown với đủ cột: | Đối tượng/Hạng mục | Số liệu (kèm đơn vị, phạm vi,
+   thời điểm) | Nguồn |. Người đọc nhìn bảng phải nắm được toàn bộ con số.
+3. Phần Conclusions trong báo cáo phải mở rộng từng conclusion của Analyst kèm số liệu
+   chứng minh, không copy-paste nguyên văn 1 câu ngắn gọn.
+4. CẤM các câu chung chung không số liệu ("mức kỷ lục", "tăng mạnh", "phát triển tốt")
+   — mọi nhận định định lượng đều phải có con số và trích dẫn [n] đi kèm.
 In-depth Analysis
 [Phân tích sâu hơn — liên hệ giữa các finding, giải thích ý nghĩa, so sánh nếu có nhiều góc nhìn
 trái chiều, dựa trên "insights" được cung cấp]
@@ -30,6 +41,13 @@ phạm vi dữ liệu đã có]
 - Học thuật, khách quan, trung lập.
 - KHÔNG dùng ngôn ngữ cảm thán, KHÔNG đưa ý kiến cá nhân không có căn cứ.
 - Câu văn rõ ràng, súc tích, tránh lặp từ.
+
+## NGÔN NGỮ (BẮT BUỘC)
+- Viết đúng ngôn ngữ của đề tài nghiên cứu; nếu đề tài tiếng Việt thì TOÀN BỘ
+  title và content PHẢI dùng tiếng Việt có đầy đủ dấu thanh.
+- TUYỆT ĐỐI KHÔNG viết không dấu (ví dụ "Bao cao thi truong" là SAI,
+  phải viết "Báo cáo thị trường"). Kiểm tra lại dấu trước khi trả kết quả.
+- Tên riêng, số liệu, URL và số trích dẫn [n] giữ nguyên, không phiên âm.
 
 ## LƯU Ý QUAN TRỌNG VỀ WARNINGS
 KHÔNG tự viết phần cảnh báo/giới hạn dữ liệu trong content — phần này sẽ được hệ thống tự động

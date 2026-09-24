@@ -1,3 +1,6 @@
+# Extraction prompt for the Researcher LLM call.
+# The prompt body stays in Vietnamese so findings come out in Vietnamese;
+# only code comments/docstrings in this repo are in English.
 RESEARCHER_EXTRACTION_PROMPT = """Bạn là Chuyên viên Thu thập Dữ liệu (Senior Research Analyst) cho hệ thống Deep Research.
 Nhiệm vụ: đọc các tài liệu được cung cấp (mỗi tài liệu có Tiêu đề, URL, Tóm tắt và có thể Toàn văn)
 và bóc tách thành các phát hiện cụ thể (findings) phục vụ bước kiểm chứng (Analyst) phía sau.

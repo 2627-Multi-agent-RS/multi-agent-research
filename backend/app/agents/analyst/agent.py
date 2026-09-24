@@ -1,14 +1,14 @@
 # app/agents/analyst/agent.py
 """Analyst Agent node implementation."""
 
-import os
-from typing import Any, TypedDict
-
-from langchain_google_genai import ChatGoogleGenerativeAI
+from typing import Any, TYPE_CHECKING, TypedDict
 
 from app.agents.analyst.prompts import ANALYST_SYSTEM_PROMPT
-from app.graph.state import AgentState
 from app.schemas.research import AnalystOutput, Finding
+from app.tools.llm.factory import LLMFactory
+
+if TYPE_CHECKING:
+    from app.graph.state import AgentState
 
 
 class AnalystUpdate(TypedDict, total=False):
@@ -17,29 +17,20 @@ class AnalystUpdate(TypedDict, total=False):
     errors: list[str]
 
 
-# ============================================================
-# TẠM THỜI — thay bằng import từ app.tools.llm.factory khi Dũng push xong
-# ============================================================
-def _get_temp_model(temperature: float = 0.1) -> ChatGoogleGenerativeAI:
-    return ChatGoogleGenerativeAI(
-        model="gemini-3.6-flash",
-        google_api_key=os.getenv("GEMINI_API_KEY"),
-        temperature=temperature,
-        timeout=30,
-    )
-
-
 async def _invoke_temp(
     model: Any, prompt_messages: list[dict[str, str]], structured_schema: Any
 ) -> Any:
-    target = model.with_structured_output(structured_schema)
-    return await target.ainvoke(prompt_messages)
+    """use primary model, fallback to secondary if fails."""
+    try:
+        target = model.with_structured_output(structured_schema)
+        return await target.ainvoke(prompt_messages)
+    except Exception:
+        fallback = LLMFactory.get_fallback_model()
+        target = fallback.with_structured_output(structured_schema)
+        return await target.ainvoke(prompt_messages)
 
 
-# ============================================================
-
-
-async def run_analyst(state: AgentState) -> AnalystUpdate:
+async def run_analyst(state: "AgentState") -> AnalystUpdate:
     """Execute analysis, verification, and conflict detection on collected findings."""
     retry_count = state.get("retry_count", 0)
     raw_findings = state.get("findings", [])
@@ -60,7 +51,7 @@ async def run_analyst(state: AgentState) -> AnalystUpdate:
             errors=list(state.get("errors", [])),
         )
 
-    model = _get_temp_model(temperature=0.1)
+    model = LLMFactory.get_primary_model(temperature=0.1, timeout=30)
     prompt = [
         {"role": "system", "content": ANALYST_SYSTEM_PROMPT},
         {"role": "user", "content": f"Findings:\n{[f.model_dump() for f in findings]}"},

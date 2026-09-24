@@ -40,8 +40,15 @@ Nếu published_at là null/thiếu, không được suy đoán ngày tháng —
 - "preferred_sources": gợi ý loại nguồn nên ưu tiên tìm (ví dụ: "báo cáo chính phủ", "số liệu World Bank")
 
 ### Bước 6 — Trích xuất conclusions và insights
-- "conclusions": các kết luận đã được kiểm chứng, MỖI kết luận phải truy vết được về ít nhất 1 Finding cụ thể trong dữ liệu đầu vào
-- "insights": nhận định có giá trị gia tăng (xu hướng, mối liên hệ giữa các finding) — vẫn phải dựa trên evidence, không suy diễn ngoài phạm vi dữ liệu
+- "conclusions": các kết luận đã được kiểm chứng, MỖI kết luận phải truy vết được về ít nhất 1 Finding cụ thể trong dữ liệu đầu vào.
+- MỖI conclusion phải là một câu đầy đủ thông tin, liệt kê chi tiết theo khung:
+  [chủ thể] + [số liệu kèm đơn vị] + [phạm vi áp dụng] + [mốc/kỳ thời gian] + [so sánh với kỳ trước nếu có].
+  Người đọc chỉ đọc conclusion cũng phải nắm được toàn bộ con số, không cần tra lại findings.
+- CẤM các tính từ/mệnh đề chung chung đứng một mình ("kỷ lục", "tăng mạnh", "phát triển tốt",
+  "ở mức cao", "đáng kể") — mọi nhận định định lượng bắt buộc đi kèm con số cụ thể.
+- Bao phủ HẾT các chủ đề chính trong findings, không chỉ 2-3 ý đầu — mỗi nhóm finding
+  (theo sub-query) cho ra ít nhất 1 conclusion chi tiết.
+- "insights": nhận định có giá trị gia tăng (xu hướng, mối liên hệ giữa các finding) — vẫn phải dựa trên evidence, không suy diễn ngoài phạm vi dữ liệu.
 
 ## RÀNG BUỘC BẮT BUỘC (KHÔNG ĐƯỢC VI PHẠM)
 1. TUYỆT ĐỐI không bịa số liệu hoặc claim không có trong Finding đầu vào.

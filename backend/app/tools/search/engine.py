@@ -34,11 +34,12 @@ async def parallel_search(
     ddg_regions: List[str] | None = None,
     search_depth: str | None = None,
 ) -> List[Dict[str, Any]]:
-    """Fan-out Tavily + DDG đa region cho N queries.
+    """Fan out Tavily + multi-region DDG for N queries.
 
-    ddg_regions mặc định ["wt-wt", "us-en"]: mỗi query search 1 lần quốc tế
-    + 1 lần region Mỹ để lấy nguồn tiếng Anh, chống lệch hoàn toàn về nguồn nội địa.
-    search_depth truyền xuống Tavily ("basic" 1 credit, "advanced" 2 credits).
+    ddg_regions defaults to ["wt-wt", "us-en"]: each query is searched once
+    internationally + once in the US region for English sources, avoiding a
+    purely domestic result set.
+    search_depth is passed down to Tavily ("basic" 1 credit, "advanced" 2 credits).
     """
     clean = [q.strip() for q in (queries or []) if q and q.strip()]
     if not clean:
@@ -79,7 +80,7 @@ async def parallel_search(
     for item in nested:
         if not isinstance(item, list):
             continue
-        # Ưu tiên doc có score cao trong cùng batch
+        # Prefer higher-scored docs within the same batch
         try:
             item = sorted(item, key=lambda d: (d.get("score") is None, -(d.get("score") or 0)))
         except Exception:

@@ -1,5 +1,5 @@
-"""Trích queries cần search từ state: follow-up của Analyst được ưu tiên,
-ngược lại dùng plan.sub_queries của Orchestrator, fallback về topic gốc."""
+"""Extract search queries from state: Analyst follow-up takes priority,
+falling back to Orchestrator plan.sub_queries, then the raw topic."""
 
 from typing import TYPE_CHECKING, Any
 
@@ -10,7 +10,7 @@ MAX_QUERIES = 5
 
 
 def _val(obj: Any, key: str, default: Any = None) -> Any:
-    """Đọc key từ dict lẫn Pydantic model (state merge dùng object, test dùng dict)."""
+    """Read a key from either a dict or a Pydantic model (merged state uses objects, tests use dicts)."""
     if obj is None:
         return default
     if isinstance(obj, dict):
@@ -19,16 +19,17 @@ def _val(obj: Any, key: str, default: Any = None) -> Any:
 
 
 def get_follow_up_questions(state: "AgentState") -> list[str]:
-    """Câu hỏi tra cứu bổ sung của Analyst (rỗng nếu không có)."""
+    """Analyst follow-up questions (empty when absent)."""
     questions = _val(_val(_val(state, "analysis"), "follow_up_request"), "questions")
     return [q.strip() for q in (questions or []) if q and str(q).strip()]
 
 
 def resolve_queries(state: "AgentState") -> list[str]:
-    """Trả về tối đa MAX_QUERIES query đã dedup, giữ thứ tự.
+    """Return at most MAX_QUERIES deduped queries, preserving order.
 
-    Follow-up được dùng ngay khi tồn tại (vòng loop-back retry_count vẫn là 0,
-    vì researcher mới là node tăng retry — theo routing MAX_RESEARCH_RETRIES).
+    Follow-up is honored as soon as it exists (the loop-back pass still has
+    retry_count == 0, since researcher is the node that increments retry —
+    see routing MAX_RESEARCH_RETRIES).
     """
     queries = get_follow_up_questions(state)
     if not queries:

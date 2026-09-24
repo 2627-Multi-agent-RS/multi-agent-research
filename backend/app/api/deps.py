@@ -1,7 +1,6 @@
 """Application-scoped dependencies for the realtime gateway."""
 
 from functools import lru_cache
-from pathlib import Path
 from typing import Any
 
 from app.core.config import settings
@@ -25,26 +24,13 @@ def get_research_graph() -> Any | None:
         return None
 
     try:
-        from langgraph.checkpoint.sqlite import SqliteSaver
-
-        from app.graph.build import build_research_graph
+        from app.graph.build import build_research_graph, get_sqlite_checkpointer
     except ImportError as exc:
         raise RuntimeError(
             "The LangGraph research pipeline is unavailable. Install backend "
             "dependencies and provide app.graph.build.build_research_graph."
         ) from exc
 
-    checkpoint_path = Path(settings.checkpoint_db_path)
-    if settings.checkpoint_db_path != ":memory:":
-        checkpoint_path = (
-            checkpoint_path
-            if checkpoint_path.is_absolute()
-            else Path.cwd() / checkpoint_path
-        )
-        checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
-        database = str(checkpoint_path)
-    else:
-        database = ":memory:"
-
-    checkpointer = SqliteSaver.from_conn_string(database)
+    # Dùng factory chung (đã gắn serde allowlist + mkdir + setup).
+    checkpointer = get_sqlite_checkpointer(settings.checkpoint_db_path)
     return build_research_graph(checkpointer=checkpointer)

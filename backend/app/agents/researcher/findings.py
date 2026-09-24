@@ -1,4 +1,4 @@
-"""Findings heuristic: 1 search doc -> 1 Finding (Pydantic, khớp AgentState)."""
+"""Heuristic findings: 1 search doc -> 1 Finding (Pydantic, matches AgentState)."""
 
 from typing import Any
 
@@ -8,14 +8,14 @@ EVIDENCE_CHARS = 500
 
 
 def coerce_finding(f: Finding | dict[str, Any]) -> Finding:
-    """Ép finding từ state về Pydantic Finding (state merge dùng object, test dùng dict)."""
+    """Coerce a state finding into a Pydantic Finding (merged state uses objects, tests use dicts)."""
     if isinstance(f, Finding):
         return f
     return Finding(**f)
 
 
 def build_heuristic_findings(search_docs: list[dict[str, Any]]) -> list[Finding]:
-    """Mỗi doc search thành 1 Finding {claim, evidence, source_url, source_title, published_at}."""
+    """Turn each search doc into 1 Finding {claim, evidence, source_url, source_title, published_at}."""
     findings: list[Finding] = []
     for doc in search_docs:
         title = (doc.get("title") or "").strip()
@@ -42,7 +42,7 @@ def merge_findings(
     existing: list[Finding | dict[str, Any]],
     new: list[Finding | dict[str, Any]],
 ) -> list[Finding]:
-    """Gộp findings vòng trước + vòng mới, dedup theo (claim, source_url), giữ thứ tự."""
+    """Merge previous-round + new findings, dedup on (claim, source_url), preserve order."""
     merged: list[Finding] = []
     seen: set[tuple[str, str]] = set()
     for f in list(existing or []) + list(new or []):

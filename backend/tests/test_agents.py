@@ -41,7 +41,6 @@ async def test_run_analyst_detects_conflict(mocker):
         conflicts=["Tăng trưởng GDP: Nguồn A 6.5%, Nguồn B 4.2%"],
     )
 
-    mocker.patch("app.agents.analyst.agent._get_temp_model", return_value=None)
     mocker.patch("app.agents.analyst.agent._invoke_temp", return_value=mock_result)
 
     state = {
