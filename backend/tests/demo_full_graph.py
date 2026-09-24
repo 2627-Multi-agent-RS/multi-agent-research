@@ -1,7 +1,7 @@
 """Demo full MAS graph: orchestrator -> researcher -> analyst -> writer.
 
 Chạy từ repo root:
-    ./backend/.venv/bin/python backend/app/test/demo_full_graph.py [topic]
+    ./backend/.venv/bin/python backend/tests/demo_full_graph.py [topic]
 
 Kết quả: in tiến trình từng node + tóm tắt báo cáo, lưu JSON vào backend/output/.
 """
@@ -13,7 +13,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-BACKEND_DIR = Path(__file__).resolve().parents[2]
+BACKEND_DIR = Path(__file__).resolve().parents[1]
 if str(BACKEND_DIR) not in sys.path:
     sys.path.insert(0, str(BACKEND_DIR))
 
