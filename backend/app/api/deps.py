@@ -13,24 +13,30 @@ def get_connection_manager() -> ConnectionManager:
     return ConnectionManager()
 
 
-@lru_cache
-def get_research_graph() -> Any | None:
+_cached_graph: Any | None = None
+
+
+async def get_research_graph() -> Any | None:
     """Khởi tạo và biên dịch StateGraph đồ thị nghiên cứu kèm SQLite Checkpointer.
 
-    Nếu bật cờ USE_MOCK_RESEARCH (phục vụ test hoặc phát triển giao diện khi chưa tích hợp graph),
-    hàm sẽ trả về None để stream_research kích hoạt mock stream.
+    Dùng AsyncSqliteSaver (bản sync SqliteSaver không chạy được với
+    astream_events bất đồng bộ). Graph được build 1 lần và cache process-wide.
+    Nếu bật cờ USE_MOCK_RESEARCH, trả về None để stream_research kích hoạt mock stream.
     """
+    global _cached_graph
     if settings.use_mock_research:
         return None
+    if _cached_graph is not None:
+        return _cached_graph
 
     try:
-        from app.graph.build import build_research_graph, get_sqlite_checkpointer
+        from app.graph.build import build_research_graph, get_async_sqlite_checkpointer
     except ImportError as exc:
         raise RuntimeError(
             "The LangGraph research pipeline is unavailable. Install backend "
             "dependencies and provide app.graph.build.build_research_graph."
         ) from exc
 
-    # Dùng factory chung (đã gắn serde allowlist + mkdir + setup).
-    checkpointer = get_sqlite_checkpointer(settings.checkpoint_db_path)
-    return build_research_graph(checkpointer=checkpointer)
+    checkpointer = await get_async_sqlite_checkpointer(settings.checkpoint_db_path)
+    _cached_graph = build_research_graph(checkpointer=checkpointer)
+    return _cached_graph

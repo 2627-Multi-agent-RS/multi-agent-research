@@ -41,7 +41,7 @@ async def research_websocket(websocket: WebSocket) -> None:
             active_thread_id = request.thread_id
 
         # 4. Lấy đồ thị StateGraph và thực thi truyền phát luồng sự kiện
-        graph = get_research_graph()
+        graph = await get_research_graph()
         await stream_research(
             thread_id=active_thread_id,
             topic=request.topic,

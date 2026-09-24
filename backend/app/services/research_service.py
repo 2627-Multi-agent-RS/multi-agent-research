@@ -235,12 +235,17 @@ def normalize_graph_event(
         seen_urls: set[str] = set()
         sources: list[dict[str, str]] = []
         for finding in findings:
-            if isinstance(finding, dict):
+            if hasattr(finding, "model_dump"):
+                url = finding.source_url
+                title = finding.source_title or ""
+            elif isinstance(finding, dict):
                 url = finding.get("source_url")
                 title = finding.get("source_title", "")
-                if url and url not in seen_urls:
-                    seen_urls.add(url)
-                    sources.append({"url": url, "title": title})
+            else:
+                continue
+            if url and url not in seen_urls:
+                seen_urls.add(url)
+                sources.append({"url": url, "title": title})
         if sources:
             events.append(
                 make_event(
@@ -253,6 +258,8 @@ def normalize_graph_event(
 
     elif node == "analyst":
         analysis = output.get("analysis", output)
+        if hasattr(analysis, "model_dump"):
+            analysis = analysis.model_dump(mode="json")
         if not isinstance(analysis, dict):
             analysis = {}
         status = analysis.get("status")
@@ -282,6 +289,8 @@ def normalize_graph_event(
 
     elif node == "writer":
         report = output.get("final_report", output)
+        if hasattr(report, "model_dump"):
+            report = report.model_dump(mode="json")
         events.append(
             make_event(
                 thread_id,
