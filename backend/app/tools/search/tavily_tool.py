@@ -20,7 +20,7 @@ def _get_client():
     if not api_key:
         if not _logged_no_key:
             _logged_no_key = True
-            logger.info("TAVILY_API_KEY chưa cấu hình — bỏ qua Tavily, chỉ dùng DuckDuckGo.")
+            logger.info("TAVILY_API_KEY chưa cấu hình — search trả rỗng.")
         return None
     try:
         _tavily_client = AsyncTavilyClient(api_key=api_key)

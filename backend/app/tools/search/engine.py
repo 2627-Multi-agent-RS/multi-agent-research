@@ -1,13 +1,13 @@
-"""Parallel search engine — fan-out Tavily + DuckDuckGo for N queries.
+"""Parallel search engine — fan-out Tavily across N queries.
 
-Priorities: Tavily > DDG (Because tavily has score)
+Tavily is the single search backend (DuckDuckGo removed: persistently
+rate-limited under parallel load, zero successful responses in production logs).
 """
 
 import asyncio
 from typing import Any, Dict, List
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
-from app.tools.search.ddg_tool import search_duckduckgo
 from app.tools.search.tavily_tool import search_tavily
 
 _TRACKING_PARAMS = {"utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"}
@@ -31,20 +31,12 @@ async def parallel_search(
     max_results_per_query: int = 3,
     max_concurrency: int = 8,
     timeout_per_query: float = 20.0,
-    ddg_regions: List[str] | None = None,
     search_depth: str | None = None,
 ) -> List[Dict[str, Any]]:
-    """Fan out Tavily + multi-region DDG for N queries.
-
-    ddg_regions defaults to ["wt-wt", "us-en"]: each query is searched once
-    internationally + once in the US region for English sources, avoiding a
-    purely domestic result set.
-    search_depth is passed down to Tavily ("basic" 1 credit, "advanced" 2 credits).
-    """
+    """Fan out Tavily search for N queries in parallel, deduped by normalized URL."""
     clean = [q.strip() for q in (queries or []) if q and q.strip()]
     if not clean:
         return []
-    regions = ddg_regions or ["wt-wt", "us-en"]
 
     sem = asyncio.Semaphore(max_concurrency)
 
@@ -52,26 +44,17 @@ async def parallel_search(
         async with sem:
             return await coro
 
-    tasks = []
-    for q in clean:
-        tasks.append(
-            _guarded(
-                search_tavily(
-                    q,
-                    max_results_per_query,
-                    search_depth=search_depth,
-                    timeout=timeout_per_query,
-                )
+    tasks = [
+        _guarded(
+            search_tavily(
+                q,
+                max_results_per_query,
+                search_depth=search_depth,
+                timeout=timeout_per_query,
             )
         )
-        for region in regions:
-            tasks.append(
-                _guarded(
-                    search_duckduckgo(
-                        q, max_results_per_query, timeout=timeout_per_query, region=region
-                    )
-                )
-            )
+        for q in clean
+    ]
 
     nested = await asyncio.gather(*tasks, return_exceptions=True)
 

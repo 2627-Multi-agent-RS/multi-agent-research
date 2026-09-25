@@ -15,7 +15,6 @@ tenacity>=9.0.0,<10.0
 
 # Search & Scraping (Cường/Dũng cũng dùng)
 tavily-python==0.5.0
-duckduckgo-search==6.3.7
 trafilatura==1.12.2
 
 # Backend server & realtime transport (Dũng dùng)

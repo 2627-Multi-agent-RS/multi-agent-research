@@ -29,11 +29,14 @@ export function AgentTimeline({ statuses }: AgentTimelineProps) {
           const Icon = status === 'completed' ? Check : status === 'warning' || status === 'failed' ? CircleAlert : status === 'running' ? LoaderCircle : CircleDashed;
           return (
             <div className={`timeline-item status-${status}`} key={agent.id}>
-              <div className="timeline-marker"><Icon size={18} className={status === 'running' ? 'spin' : ''} /></div>
-              {index < agents.length - 1 && <div className="timeline-line" />}
+              <div className="timeline-rail">
+                <div className="timeline-marker"><Icon size={17} className={status === 'running' ? 'spin' : ''} /></div>
+                {index < agents.length - 1 && <div className="timeline-line" />}
+              </div>
               <div className="timeline-copy">
+                <span className="step-index">0{index + 1}</span>
                 <div className="timeline-title-row">
-                  <div><strong>{agent.label}</strong><span>{agent.description}</span></div>
+                  <div><strong>{agent.label}</strong><span className="timeline-desc">{agent.description}</span></div>
                   <span className="status-label">{status === 'idle' ? 'Chờ' : status === 'running' ? `${event?.progress ?? 0}%` : status === 'completed' ? 'Xong' : 'Cảnh báo'}</span>
                 </div>
                 {event?.message && <p>{event.message}</p>}

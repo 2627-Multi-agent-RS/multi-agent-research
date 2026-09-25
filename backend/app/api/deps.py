@@ -3,6 +3,8 @@
 from functools import lru_cache
 from typing import Any
 
+from loguru import logger
+
 from app.core.config import settings
 from app.services.connection_mgr import ConnectionManager
 
@@ -14,6 +16,7 @@ def get_connection_manager() -> ConnectionManager:
 
 
 _cached_graph: Any | None = None
+_cached_conn: Any | None = None
 
 
 async def get_research_graph() -> Any | None:
@@ -23,7 +26,7 @@ async def get_research_graph() -> Any | None:
     astream_events bất đồng bộ). Graph được build 1 lần và cache process-wide.
     Nếu bật cờ USE_MOCK_RESEARCH, trả về None để stream_research kích hoạt mock stream.
     """
-    global _cached_graph
+    global _cached_graph, _cached_conn
     if settings.use_mock_research:
         return None
     if _cached_graph is not None:
@@ -38,5 +41,24 @@ async def get_research_graph() -> Any | None:
         ) from exc
 
     checkpointer = await get_async_sqlite_checkpointer(settings.checkpoint_db_path)
+    _cached_conn = checkpointer.conn
     _cached_graph = build_research_graph(checkpointer=checkpointer)
     return _cached_graph
+
+
+async def close_research_graph() -> None:
+    """Đóng connection SQLite của graph đã cache (gọi từ lifespan shutdown).
+
+    Không đóng thì Ctrl+C treo ở teardown: interpreter dọn thread pool trong khi
+    connection vẫn mở, dễ ăn KeyboardInterrupt lần 2 và traceback xấu.
+    """
+    global _cached_graph, _cached_conn
+    _cached_graph = None
+    conn, _cached_conn = _cached_conn, None
+    if conn is None:
+        return
+    try:
+        await conn.close()
+        logger.info("research_graph_closed")
+    except Exception as exc:  # noqa: BLE001 — shutdown không được fail vì lỗi dọn dẹp
+        logger.warning(f"research_graph_close_failed: {exc}")

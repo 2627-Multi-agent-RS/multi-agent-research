@@ -1,7 +1,7 @@
-"""Researcher Agent node — parallel multi-source search + full-text scraping.
+"""Researcher Agent node — parallel Tavily search + full-text scraping.
 
 Receives queries from Orchestrator (plan.sub_queries) or Analyst (follow_up_request),
-fans out to Tavily + multi-region DuckDuckGo, scrapes top-N, returns Pydantic findings.
+fans out to Tavily, scrapes top-N, returns Pydantic findings.
 
 Submodules:
     queries.py  — resolve_queries / get_follow_up_questions
@@ -83,14 +83,14 @@ async def research_topic(
         f"search_done: {len(search_docs)} docs {by_source} ({time.perf_counter() - t0:.1f}s)."
     )
     if not search_docs:
-        log.warning("research_topic: no_docs_found (Tavily + DDG đều rỗng).")
+        log.warning("research_topic: no_docs_found (Tavily rỗng).")
         return {
             "search_docs": [],
             "scraped": {},
             "combined_context": "",
             "findings": [],
             "search_queries": clean,
-            "limitations": ["no_docs_found: Tavily + DDG đều rỗng, kiểm tra mạng/API key"],
+            "limitations": ["no_docs_found: Tavily rỗng, kiểm tra mạng/API key"],
         }
 
     limitations: list[str] = []

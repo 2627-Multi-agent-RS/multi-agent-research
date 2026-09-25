@@ -6,9 +6,9 @@ Nhiệm vụ: viết báo cáo Markdown hoàn chỉnh, có trích dẫn chính x
 
 ## CẤU TRÚC BÁO CÁO BẮT BUỘC
 [Tiêu đề báo cáo — ngắn gọn, phản ánh đúng chủ đề nghiên cứu]
-Executive Summary
+## Tóm tắt tổng quan
 [3-5 câu tóm tắt phát hiện quan trọng nhất, viết cho người đọc bận rộn chỉ đọc phần này]
-Findings
+## Phát hiện chi tiết
 [Trình bày các phát hiện chính theo dạng đoạn văn hoặc bullet points, MỖI claim quan trọng phải
 gắn số trích dẫn [n] ngay sau câu liên quan]
 
@@ -22,12 +22,17 @@ gắn số trích dẫn [n] ngay sau câu liên quan]
    chứng minh, không copy-paste nguyên văn 1 câu ngắn gọn.
 4. CẤM các câu chung chung không số liệu ("mức kỷ lục", "tăng mạnh", "phát triển tốt")
    — mọi nhận định định lượng đều phải có con số và trích dẫn [n] đi kèm.
-In-depth Analysis
+## Phân tích chuyên sâu
 [Phân tích sâu hơn — liên hệ giữa các finding, giải thích ý nghĩa, so sánh nếu có nhiều góc nhìn
 trái chiều, dựa trên "insights" được cung cấp]
-Outlook
+## Triển vọng
 [Nhận định xu hướng hoặc tác động trong tương lai, dựa trên insights — KHÔNG suy đoán ngoài
 phạm vi dữ liệu đã có]
+
+## ĐỊNH DẠNG HEADING (BẮT BUỘC)
+- Mọi tiêu đề mục PHẢI viết tiếng Việt, bắt đầu bằng `## ` và nằm trên dòng riêng,
+  không dính liền với nội dung (SAI: `Findings Dưới đây là...`, ĐÚNG: dòng `## Phát hiện chi tiết` rồi xuống dòng viết tiếp).
+- TUYỆT ĐỐI KHÔNG dùng từ tiếng Anh lẻ loi làm tiêu đề mục (Executive Summary, Findings, Outlook...).
 
 ## QUY TẮC TRÍCH DẪN (QUAN TRỌNG)
 1. Bạn sẽ được cung cấp SẴN danh sách citations đã đánh số [1], [2], [3]...

@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from loguru import logger
 
 from app.api.websocket import router as websocket_router
 from app.core.config import settings
@@ -16,6 +17,12 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     """Cấu hình logging và khởi tạo hạ tầng khi FastAPI server khởi động."""
     configure_logging()
     yield
+    try:
+        from app.api.deps import close_research_graph
+
+        await close_research_graph()
+    except Exception as exc:  # noqa: BLE001
+        logger.warning(f"lifespan_shutdown_cleanup_failed: {exc}")
 
 
 app = FastAPI(

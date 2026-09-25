@@ -1,6 +1,7 @@
-import { Activity, ArrowUpRight, Cable, FileText, RefreshCw, ShieldCheck } from 'lucide-react';
+import { Activity, ArrowUpRight, Cable, RefreshCw, ShieldCheck } from 'lucide-react';
 import { useId } from 'react';
 import { AgentTimeline } from './components/research/AgentTimeline';
+import { MarkdownReport } from './components/research/MarkdownReport';
 import { ResearchInput } from './components/research/ResearchInput';
 import { useResearchSocket } from './hooks/useResearchSocket';
 
@@ -29,7 +30,7 @@ function App() {
           <div className="input-panel"><ResearchInput disabled={isResearching} isConnected={isConnected} onSubmit={startResearch} /></div>
           {error && <div className="error-banner" role="alert"><ShieldCheck size={18} /><span>{error}</span><button onClick={reconnect} type="button" title="Kết nối lại"><RefreshCw size={16} /></button></div>}
           <AgentTimeline statuses={agentStatus} />
-          {report && <article className="report-preview"><div className="section-heading"><div><p className="eyebrow">Final output</p><h2>{report.title}</h2></div><FileText size={21} /></div><div className="report-content">{report.content}</div></article>}
+          {report && <MarkdownReport report={report} />}
         </div>
         <aside className="side-column">
           <div className="side-heading"><p className="eyebrow">Session notes</p><h2>Research control</h2></div>
